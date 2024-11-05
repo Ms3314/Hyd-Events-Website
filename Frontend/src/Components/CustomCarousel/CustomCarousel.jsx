@@ -20,14 +20,15 @@ const CustomCarousel = () => {
 
     return (
         <div className="overflow-hidden relative">
-            <div className="flex h-80 w-70 items-center justify-center h-screen">
+            <div className="flex h-80 w-full items-center justify-center">
                 <div
-                    className="flex h-80 w-70 transition-transform ease-out duration-500"
-                    style={{ transform: `translateX(-${curr * 100}%)` }}
+                    className="flex h-80 transition-transform ease-out duration-500"
+                    style={{ transform: `translateX(-${curr * 100}%)`,
+                            width: `${slides.length * 100}%`, }}
                 >
                     {slides.map((slide) => (
                         <div className="flex-shrink-0 w-full flex justify-center" key={slide.key}>
-                            <img src={slide.src} alt={slide.key} className="max-w-xs md:max-w-md lg:max-w-lg" />
+                            <img src={slide.src} alt={slide.key} className="max-w-xs mx-auto md:max-w-md lg:max-w-lg" />
                         </div>
                     ))}
                 </div>
@@ -38,7 +39,7 @@ const CustomCarousel = () => {
                     onClick={prev}
                     className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="42px" viewBox="0 -960 960 960" width="48px" fill="#000000">
                         <path d="M400-80 0-480l400-400 56 57-343 343 343 343-56 57Z" />
                     </svg>
                 </button>
@@ -46,7 +47,7 @@ const CustomCarousel = () => {
                     onClick={next}
                     className="p-1 rounded-full shadow bg-white/80 text-gray-800 hover:bg-white"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#000000">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="42px" viewBox="0 -960 960 960" width="48px" fill="#000000">
                         <path d="m304-82-56-57 343-343-343-343 56-57 400 400L304-82Z" />
                     </svg>
                 </button>
