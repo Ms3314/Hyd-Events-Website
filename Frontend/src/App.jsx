@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import Navbar from './Components/Navbar/Navbar'
 import ResponsiveMenu from './Components/Navbar/ResponsiveMenu'
-// import Carousel from './Components/CustomCarousel/CustomCarousel'
 import './App.css'
-// import { Carousel as BootstrapCarousel } from 'bootstrap'
 import CustomCarousel from './Components/CustomCarousel/CustomCarousel'
+import HomePage from './Components/Pages/HomePage'
+import EventPage from './Components/Pages/EventPage'
+import About from './Components/Pages/About'
+
 
 function App() {
 
@@ -14,6 +16,7 @@ function App() {
     <ResponsiveMenu/>
       <hr/>
       <CustomCarousel/>
+    
     
     </>
   )

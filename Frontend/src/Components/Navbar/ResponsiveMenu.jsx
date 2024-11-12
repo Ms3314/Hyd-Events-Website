@@ -1,5 +1,11 @@
 import React from 'react'
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+import EventPage from '../Pages/EventPage';
+import HomePage from '../Pages/HomePage';
+import About from '../Pages/About';
+// import { Link } from "react-router-native";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 const ResponsiveMenu = ({ open }) => {
     return(
@@ -16,9 +22,9 @@ const ResponsiveMenu = ({ open }) => {
                    
                         <div className="text-xl font-semibold uppercase bg-primary text-white text-center py-10 m-6 rounded-3xl">
                             <ul className="flex flex-col items-center">
-                                <li>Home</li>
-                                <li>Events</li>
-                                <li>About</li>
+                                <li><Link to ="/HomePage">Home</Link></li>
+                                <li><Link to ="/EventPage">Events</Link></li>
+                                <li><Link to ="/About">About</Link></li>
                                 <li>Registered</li>
                                 <li>contact</li>
                             </ul>

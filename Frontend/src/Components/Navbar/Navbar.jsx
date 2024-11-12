@@ -1,23 +1,26 @@
 import React from 'react'
 import ResponsiveMenu from './ResponsiveMenu'; 
 import hydEventsLogo from '../../assets/hydEventsLogo.png'; 
+import HomePage from '../Pages/HomePage';
+import EventPage from '../Pages/EventPage';
+import About from '../Pages/About';
 
 
 const NavbarMenu = [
     {
       id:1,
       title:"Home",
-      link:"/",
+      link:"HomePage",
     },
     {
       id:2,
       title:"Events",
-      link:"#",
+      link:"EventPage",
     },
     {
       id:3,
       title:"About",
-      link:"#",
+      link:"About",
     },
     {
       id:4,
