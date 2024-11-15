@@ -2,7 +2,8 @@ import React from 'react'
 import img1 from '../../assets/img1.png'
 import pic2 from '../../assets/pic2.png'
 
-const Cards = () => {
+
+const PreEventsCards = () => {
     const Data =[
         {
             id:1,
@@ -83,10 +84,10 @@ const Cards = () => {
 
         },
     ]
-    
   return (
-   <>
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-center gap-4 m-6 p-6 md:px-8 md:py-6 lg:mx-40 lg:p-30'>
+    <div>
+         <h2 className='flex text-black text-2xl font-bold uppercase pt-2 mt-2 pl-6'>previous events</h2>
+         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-center gap-4 m-6 p-6 md:px-8 md:py-6 lg:mx-40 lg:p-30'>
         {Data.map((item) => (
         <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
             <div className="h-64 relative">
@@ -115,17 +116,16 @@ const Cards = () => {
         </div>
         </div>
    
-))}
-     
-    </div>
-    <div className='mr-16 justify-items-end'>
-    <button className="flex bottom-2 right-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm 
+    ))}
+   </div>
+   <div className='mr-16 justify-items-end'>
+     <button className="flex bottom-2 right-2 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm 
                         hover:bg-blue-700 transition duration-200">
                 View All Events
-    </button>
+     </button>
     </div>
-    </> 
+    </div>
   )
 }
 
-export default Cards
+export default PreEventsCards
