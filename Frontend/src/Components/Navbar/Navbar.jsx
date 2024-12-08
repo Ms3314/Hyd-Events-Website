@@ -4,7 +4,7 @@ import hydEventsLogo from '../../assets/hydEventsLogo.png';
 import HomePage from '../Pages/HomePage';
 import EventPage from '../Pages/EventPage';
 import About from '../Pages/About';
-
+import { NavLink } from 'react-router-dom';
 
 const NavbarMenu = [
     {
@@ -15,12 +15,12 @@ const NavbarMenu = [
     {
       id:2,
       title:"Events",
-      link:"EventPage",
+      link:"/events",
     },
     {
       id:3,
       title:"About",
-      link:"About",
+      link:"/about",
     },
     {
       id:4,
@@ -40,7 +40,7 @@ const Navbar = () => {
     <nav>
         <div className="container flex justify-between items-center py-4 md:pt-4">
             {/*logo secction*/}
-            <div className="text-2xl flex items-center gap-2 font-bold">
+            <div className="w-24 flex items-center gap-2 font-bold">
                 {/* <p className='text-primary'>Hyd</p>
                 <p className="text-secondary">Events</p> */}
                 <img src={hydEventsLogo}/>
@@ -50,10 +50,10 @@ const Navbar = () => {
               <ul className='flex items-center justify-center gap-6 text-slate-800'>
                 {NavbarMenu.map((menu) => (
                   <li key={menu.id}>
-                    <a href={menu.link}
+                    <NavLink to={menu.link}
                     className='inline-block py-1 pt-3 
                     hover:text-primary hover:shadow-[0_3px_0_-1px_#0284c7] font-semibold'
-                    >{menu.title}</a>
+                    >{menu.title}</NavLink>
                   </li>
                 )
               )}

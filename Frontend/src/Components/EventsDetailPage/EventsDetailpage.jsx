@@ -1,135 +1,16 @@
-import React from 'react';
-import img1 from '../../assets/img1.png'
-import pic2 from '../../assets/pic2.png'
-import { useParams } from 'react-router-dom';
+
+import { MyContext } from "../../App"
+import { useContext } from "react"
+
 
 const EventsDetailpage = () => {
-  // // const item = Details.find(item => item.id === parseInt(id));
-  // const { eventId } = useParams();
-
-  // // Make sure 'events' is an array and exists
-  // const detail = Details?.find(detail => detail.id === eventId);
-  const Details =[
-    {
-        id:11,
-        imgSrc:img1,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Muffakham jah college of engineering and technology',
-        Timings:'1:00-2:00',
-        fee:'Free',
-        Banner:'https://tse2.mm.bing.net/th?id=OIP.0M2UfAjrF3u49iD-xVE0zAHaEK&pid=Api&P=0&h=180',
-        EventType:'hackathon',
-        club:'csi',
-        NoOfReg:'490',
-        DeadLine:'4-jan-2023',
-        Teamsize:'Individual',
-        description:'lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-    {
-        id:21,
-        imgSrc:pic2,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Hyderabad',
-        Timings:'1:00-2:00',
-        fee:49,
-        GLink:'/',
-         EventType:'hackathon',
-        NoOfReg:'490',
-        Teamsize:'Individual',
-        DeadLine:'4-jan-2023',
-         club:'csi',
-        description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-    {
-        id:31,
-        imgSrc:img1,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Hyderabad',
-        Timings:'1:00-2:00',
-        fee:49,
-        GLink:'/',
-        NoOfReg:'490',
-        EventType:'hackathon',
-        DeadLine:'4-jan-2023',
-        Teamsize:'Individual',
-         club:'csi',
-        description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-    {
-        id:41,
-        imgSrc:pic2,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Hyderabad',
-        Timings:'1:00-2:00',
-        fee:49,
-        GLink:'/',
-        NoOfReg:'490',
-        EventType:'hackathon',
-        DeadLine:'4-jan-2023',
-        Teamsize:'Individual',
-         club:'csi',
-        description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-    {
-        id:51,
-        imgSrc:img1,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Hyderabad',
-        Timings:'1:00-2:00',
-        fee:49,
-        GLink:'/',
-        NoOfReg:'490',
-        EventType:'hackathon',
-         club:'csi',
-         DeadLine:'4-jan-2023',
-         Teamsize:'Individual',
-        description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-    {
-        id:61,
-        imgSrc:pic2,
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Venue:'Hyderabad',
-        Timings:'1:00-2:00',
-        fee:49,
-        GLink:'/',
-        NoOfReg:'490',
-        EventType:'hackathon',
-         club:'csi',
-        Teamsize:'Individual',
-        DeadLine:'4-jan-2023',
-
-        description:' lorem Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
-        
-
-    },
-]
+ 
+  const {data , setData} = useContext(MyContext)
+  console.log(data , "This is the data")
+  const detail = data
   return (
     <>
-    {Details.map((detail) => (
-    <div>  
+    <div >  
     <div className='flex flex-col sm:flex-row box-content rounded-lg text-white-50 shadow-lg bg-black m-5'>
         <div className='container flex h-full w-full sm:w-1/3 mb-40'>
         banner holder
@@ -196,7 +77,7 @@ const EventsDetailpage = () => {
           {detail.description}
         </div>
          </div>
-      ))}
+      
       </>
         
   )

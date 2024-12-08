@@ -37,7 +37,7 @@ const Header = () => {
                 {ListItems.map((item) => (
                   <li key={item.id}>
                     <a href={item.Link}
-                    className='inline-block py-1 px-1 border-2 rounded-2xl shadow-2xl
+                    className='inline-block  py-1 px-2 border-2 rounded-2xl shadow-2xl
                     hover:text-primary font-semibold'
                     >{item.Events}</a>
                   </li>
