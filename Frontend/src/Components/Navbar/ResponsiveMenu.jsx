@@ -22,7 +22,7 @@ const ResponsiveMenu = ({ open }) => {
                    
                         <div className="text-xl font-semibold uppercase bg-primary text-white text-center py-10 m-6 rounded-3xl">
                             <ul className="flex flex-col items-center">
-                                <li><Link to ="/HomePage">Home</Link></li>
+                                <li><Link to ="/">Home</Link></li>
                                 <li><Link to ="/EventPage">Events</Link></li>
                                 <li><Link to ="/About">About</Link></li>
                                 <li>Registered</li>

@@ -16,7 +16,7 @@ function App() {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/>
     <ResponsiveMenu/>
       <hr/>
       <CustomCarousel/>
@@ -25,7 +25,7 @@ function App() {
       <Cards></Cards>
       <PreEventsCards/>
       <Footer/>
-    
+     */}
     
     </>
   )

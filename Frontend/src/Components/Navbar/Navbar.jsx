@@ -10,7 +10,7 @@ const NavbarMenu = [
     {
       id:1,
       title:"Home",
-      link:"HomePage",
+      link:"/",
     },
     {
       id:2,
