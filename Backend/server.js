@@ -1,10 +1,6 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const User = require('./Schema/userSchema');
-const app = express();
-var jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser')
+
+const adminRouter = require("./routes/admin.js")
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/test')
@@ -45,6 +41,9 @@ app.post("/login" , async  (req , res )=>{
     });
 
 })  
+
+app.use("/api/v1/user")
+app.use("/api/v1/admin" , adminRouter)
 
 
 app.listen(3000 , ()=>{
