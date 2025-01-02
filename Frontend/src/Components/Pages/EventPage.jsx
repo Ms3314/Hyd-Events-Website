@@ -6,7 +6,7 @@ const EventPage = () => {
     <>
     <Header/>
     <Cards/>
-    <div>EventPage</div>
+    <div></div>
     </>
   )
 }

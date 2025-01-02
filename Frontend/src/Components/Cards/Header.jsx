@@ -10,30 +10,35 @@ const Header = () => {
         },
         {
             id:19,
-            Events:'Today',
+            Events:'TECHNICAL',
             Link:'/'
         },
         {
             id:20,
-            Events:'Tommorow',
+            Events:'FUN EVENTS',
             Link:'/'
         },  
         {
             id:21,
-            Events:'This Weekend',
+            Events:'IOT',
             Link:'/'
         },
         {
             id:22,
-            Events:'Free',
+            Events:'WEBINAR',
             Link:'/'
         },
+        {
+          id:23,
+          Events:'Hackathon',
+          Link:'/'
+      },
     ]
   return (
     <div>
         <h2 className='flex text-black text-2xl font-bold uppercase pt-2 mt-2 pl-6'>Events at Mjcet</h2>
         <div>
-              <ul className='flex gap-6 text-slate-800 p-4 m-4'>
+              <ul className='flex md:gap-6 sm:gap-2 text-slate-800 p-4 m-4'>
                 {ListItems.map((item) => (
                   <li key={item.id}>
                     <a href={item.Link}
