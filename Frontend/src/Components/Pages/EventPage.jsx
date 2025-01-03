@@ -1,12 +1,11 @@
-import React from 'react'
-import Navbar from '../Navbar/Navbar'
-import ResponsiveMenu from '../Navbar/ResponsiveMenu'
+import Cards from '../Cards/Cards'
+import Header from '../Cards/Header'
 
 const EventPage = () => {
   return (
     <>
-    <ResponsiveMenu></ResponsiveMenu>
-    <Navbar></Navbar>
+    <Header/>
+    <Cards/>
     <div>EventPage</div>
     </>
   )
