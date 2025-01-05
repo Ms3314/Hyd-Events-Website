@@ -24,20 +24,53 @@ export async function FindUser (email) {
     return res ;
 }
 // the organisation will be an array over here 
-export async function AddEvent (title , description , event_date , price , registration_link , orgnisation , event_image ) {
-    const res = await prisma.event.create({
-        data : {
-            title ,
-            description ,
-            event_date , 
-            price ,
-            registration_link ,
-            organisation ,
-            event_image 
-        }
-    })
-    console.log(res);
+//.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
+export async function AddEvent (title , description , event_date , price , registration_link , organisation , event_image ) {
+    try {
+        const res = await prisma.event.create({
+            data : {
+                title ,
+                description ,
+                event_date , 
+                price ,
+                registration_link ,
+                organisation ,
+                event_image 
+            }
+        })
+        return res 
+    } catch (error) {
+        return new Error(error)
+    }
+    
 }
+
+// NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
+// edding feature 
+// basically ak se main pura kar de sakne isme i dont have to everything 
+export async function EditEvent (title , description , event_date , price , registration_link , organisation , event_image ) {
+    try {
+        const res = await prisma.event.create({
+            where : {
+                email 
+            } , 
+            data : {
+                title ,
+                description ,
+                event_date , 
+                price ,
+                registration_link ,
+                organisation ,
+                event_image 
+            }
+        })
+    } catch (error) {
+        
+    }
+}
+
+
+
 // few things we have to do 
   
 // - Create user route
