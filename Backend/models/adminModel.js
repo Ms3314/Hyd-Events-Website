@@ -11,6 +11,7 @@ export async function AddUser(name , email , college ,password ) {
         }
     })
     console.log(res , "the data we send");
+    return res ; 
 }
 
 export async function FindUser (email) {
@@ -29,11 +30,16 @@ export async function AddEvent (title , description , event_date , price , regis
             title ,
             description ,
             event_date , 
+            price ,
+            registration_link ,
+            organisation ,
+            event_image 
         }
     })
+    console.log(res);
 }
 // few things we have to do 
-
+  
 // - Create user route
     
 //     POST api/v1/admin/signup
