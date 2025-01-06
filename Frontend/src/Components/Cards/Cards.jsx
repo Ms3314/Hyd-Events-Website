@@ -8,6 +8,7 @@ import { MyContext } from '../../App'
 
 
 
+
 const Cards = () => {
     const Data =[
         {
@@ -156,12 +157,7 @@ const Cards = () => {
     ))}
      
     </div>
-    <div className='mr-16 justify-items-end'>
-    <button className="flex bottom-2 right-2 px-4 py-2 md:p-2 bg-blue-600 text-white rounded-lg text-sm 
-                        hover:bg-blue-700 transition duration-200">
-                View All Events
-    </button>
-    </div>
+    
     </> 
   )
 }

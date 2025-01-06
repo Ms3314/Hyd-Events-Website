@@ -4,6 +4,7 @@ import ResponsiveMenu from '../Navbar/ResponsiveMenu'
 import CustomCarousel from '../CustomCarousel/CustomCarousel'
 import Cards from '../Cards/Cards'
 import Header from '../Cards/Header'
+import Button from '../Cards/Button'
 
 const HomePage = () => {
   return (
@@ -11,6 +12,7 @@ const HomePage = () => {
     <CustomCarousel/>
     <Header/>
     <Cards/>
+    <Button/>
     {/* <Headers/> */}
     {/* previous events ku nikal dinge */}
     {/* <PreEventsCards/> */}
