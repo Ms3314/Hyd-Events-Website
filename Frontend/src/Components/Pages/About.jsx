@@ -35,7 +35,7 @@ const About = () => {
   return (
     <>
     <h1 className='flex text-3xl text-center justify-center font-bold text-primary'>Our Mission and Vision</h1>
-    <div className='flex text-center justify-center px-38 py-12'>Our mission is to simplify the process of technical event registration for engineering students and provide them with real-time updates on current events. By creating a user-friendly platform, we aim to bridge the gap between event organizers and participants, ensuring seamless communication, efficient registration, and timely updates. 
+    <div className='flex text-center justify-center px-64 py-16'>Our mission is to simplify the process of technical event registration for engineering students and provide them with real-time updates on current events. By creating a user-friendly platform, we aim to bridge the gap between event organizers and participants, ensuring seamless communication, efficient registration, and timely updates. 
     Our vision is to become the leading platform for technical event registration and updates in engineering colleges, driving the growth of engineering communities across the globe. We aspire to create an ecosystem that promotes knowledge exchange, collaboration, and continuous learning through timely event notifications and a seamless registration process. 
     </div>
     <div className='flex text-3xl text-center justify-center font-bold text-primary'>
