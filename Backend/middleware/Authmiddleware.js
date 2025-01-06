@@ -1,12 +1,11 @@
 // need to make a middleware that checks if the user exists and also exists and verifies the password of this thing 
 
-import { FindUser } from "../models/adminModel";
-
+import { FindUser } from "../models/adminModel.js";
 // just checking like the user exists and the password 
 
 export async function CheckEmailPass(req , res , next) {
     const { email  ,password} = req.body ;
-    const user = FindUser(email) ; 
+    const user = FindUser(email) ; ``
     if(user) {
         bcrypt.compare(user.password , password, function(err, res) {
             if (res === true) {
@@ -34,8 +33,9 @@ export function CheckTokenExist(req , res , next ) {
     jwt.verify(token, process.env.SECRET_KEY , function(err, decoded) {
         // console.log(decoded.user) // bar
         try {
-            const data = FindUser(decoded.user) ;
-            if(data) {
+            const user = FindUser(decoded.email) ;
+            if(user) {
+                res.userid = user.id ; 
                 next()  
             }else {
                 res.status(500).json({

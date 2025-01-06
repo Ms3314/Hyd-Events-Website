@@ -1,8 +1,9 @@
-import { CheckEmailPass, CheckTokenExist } from "../middleware/Authmiddleware";
-const express = require('express');
+import express from 'express';
+import { CheckEmailPass, CheckTokenExist } from '../middleware/Authmiddleware.js';
+import {AuthController} from '../controllers/AuthenticationCont.js';
+import {EventController} from '../controllers/EventController.js';
 const adminRouter = express.Router();
-const AuthController = require("../controllers/AuthenticationCont")
-const EventController = require("../controllers/EventController")
+
 
 adminRouter.route('/signin').post( CheckEmailPass, AuthController.LoginAdmin)
 adminRouter.route('/signup').post(AuthController.RegisterUser)

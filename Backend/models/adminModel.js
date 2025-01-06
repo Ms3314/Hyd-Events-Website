@@ -34,8 +34,13 @@ export async function AddEvent (title , description , event_date , price , regis
                 event_date , 
                 price ,
                 registration_link ,
-                organisation ,
-                event_image 
+                // so like we are connecting the event with an organisation
+                organisation : {
+                    connect : [
+                        {id : organisation}
+                    ]    
+                },
+                event_image , 
             }
         })
         return res 
@@ -45,29 +50,57 @@ export async function AddEvent (title , description , event_date , price , regis
     
 }
 
+
+
+export async function CheckEventExist (eventid) {
+    try {
+        const data = await prisma.event.findUnique({
+            where : {
+                id : eventid ,
+            }
+        })
+        if (!data) {
+            throw new Error("couldnt find the event with this id");
+        }
+    } catch (error) {
+        throw new Error(error.message || "An error occured while ediitng this event")
+    }    
+    
+
+}
+
 // NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
 // edding feature 
 // basically ak se main pura kar de sakne isme i dont have to everything 
-export async function EditEvent (title , description , event_date , price , registration_link , organisation , event_image ) {
-    try {
-        const res = await prisma.event.create({
-            where : {
-                email 
-            } , 
-            data : {
-                title ,
-                description ,
-                event_date , 
-                price ,
-                registration_link ,
-                organisation ,
-                event_image 
-            }
-        })
-    } catch (error) {
-        
-    }
+export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image ) {
+    // need to check if an existing event like this exist or not right 
+        try {
+            await CheckEventExist(eventid)
+            await prisma.event.update({
+                where : {
+                    id : eventid,
+                    organisation : {
+                        some : {id : organisation}
+                    }
+                } , 
+                data : {
+                    title ,
+                    description ,
+                    event_date , 
+                    price ,
+                    registration_link ,
+                    organisation ,
+                    event_image 
+                }
+            
+        }) 
+        } catch (error) {
+            throw new Error(error.message || "An error occured while editing the event")
+        }
+            
+       
 }
+
 
 
 

@@ -39,3 +39,5 @@ model Event {
   // basically it takes the realtion to to the Organisation ke id 
 }
 
+
+
