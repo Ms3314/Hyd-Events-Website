@@ -29,6 +29,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -51,6 +53,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -72,6 +76,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -93,6 +99,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -114,6 +122,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -135,6 +145,8 @@ const Cards = () => {
             ClubName:"CSI-MJCET",
             NoofMem:'3400+',
             offSite:'official site',
+            ClubLdn:'www.google.com',
+        ClubIG:'www.google.co.in',
             description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis'
             
 
@@ -180,7 +192,8 @@ const Cardcomponent = ({item}) => {
     }
     
     return (
-     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
+     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col 
+                     hover:border-2 border-r-secondary border-t-primary border-l-secondary border-b-secondary">
       
       <div className="h-64 relative">
              <img src={item.imgSrc} alt={item.EventName} className="w-full h-full object-contain" />

@@ -1,9 +1,10 @@
 import React, { useContext,useState } from 'react'
 import { MyContext } from '../../App'
 import Cards from '../Cards/Cards'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import Button from '../Cards/Button'
-
+import linkedin from '../../assets/linkedin.png'
 const SocietyPg = () => {
   const {data,setData} = useContext(MyContext)
   console.log(data , "This is the data")
@@ -17,7 +18,7 @@ const SocietyPg = () => {
             <div className='relative w-32 h-48 border-1 shadow-2xl m-2 rounded-2xl inline-flex'>
               <img src={detail.ClubLogo} alt={detail.ClubName}/>
               <div className='font-bold sm:text-xl lg:text-3xl m-4 top-0 left-0 text-black p-6 rounded-tr-lg whitespace-nowrap'>{detail.ClubName}
-              <h3 className='lg:text-xl sm:text-lg whitespace-nowrap'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur, corrupti.
+              <h3 className='lg:text-xl sm:text-lg whitespace-nowrap'>Lorem ipsum dolor sit amet consectetur 
               </h3>
               </div>
             </div>
@@ -45,23 +46,28 @@ const SocietyPg = () => {
             </div>
             
             <div className='inline-flex m-1'>
-            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm1 240Zm-1-280Z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="#000000"><path d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm1 240Zm-1-280Z"/></svg>
             {/* <div className='text-xl font-semibold'> */}
             <div className='font-medium text-lg top-0 px-1 left-0 text-black rounded-tr-lg whitespace-nowrap'>Members
               <h1 className='text-sm font-normal whitespace-nowrap'>{detail.NoofMem} </h1>
               </div>
             </div>
             <div className='inline flex m-1'>
-            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="M38.67-160v-100q0-34.67 17.83-63.17T105.33-366q69.34-31.67 129.67-46.17 60.33-14.5 123.67-14.5 63.33 0 123.33 14.5T611.33-366q31 14.33 49.17 42.83T678.67-260v100h-640Zm706.66 0v-102.67q0-56.66-29.5-97.16t-79.16-66.84q63 7.34 118.66 22.5 55.67 15.17 94 35.5 34 19.34 53 46.17 19 26.83 19 59.83V-160h-176ZM358.67-480.67q-66 0-109.67-43.66Q205.33-568 205.33-634T249-743.67q43.67-43.66 109.67-43.66t109.66 43.66Q512-700 512-634t-43.67 109.67q-43.66 43.66-109.66 43.66ZM732-634q0 66-43.67 109.67-43.66 43.66-109.66 43.66-11 0-25.67-1.83-14.67-1.83-25.67-5.5 25-27.33 38.17-64.67Q578.67-590 578.67-634t-13.17-80q-13.17-36-38.17-66 12-3.67 25.67-5.5 13.67-1.83 25.67-1.83 66 0 109.66 43.66Q732-700 732-634ZM105.33-226.67H612V-260q0-14.33-8.17-27.33-8.16-13-20.5-18.67-66-30.33-117-42.17-51-11.83-107.66-11.83-56.67 0-108 11.83-51.34 11.84-117.34 42.17-12.33 5.67-20.16 18.67-7.84 13-7.84 27.33v33.33Zm253.34-320.66q37 0 61.83-24.84Q445.33-597 445.33-634t-24.83-61.83q-24.83-24.84-61.83-24.84t-61.84 24.84Q272-671 272-634t24.83 61.83q24.84 24.84 61.84 24.84Zm0 320.66Zm0-407.33Z"/></svg>
-            <div className='font-medium text-lg top-0 px-1 left-0 text-black rounded-tr-lg whitespace-nowrap'>Team Size
-              <h1 className='text-sm font-normal whitespace-nowrap'>{detail.Teamsize} </h1>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28px" height="28px" viewBox="0 0 30 30">
+    <path d="M24,4H6C4.895,4,4,4.895,4,6v18c0,1.105,0.895,2,2,2h18c1.105,0,2-0.895,2-2V6C26,4.895,25.105,4,24,4z M10.954,22h-2.95 v-9.492h2.95V22z M9.449,11.151c-0.951,0-1.72-0.771-1.72-1.72c0-0.949,0.77-1.719,1.72-1.719c0.948,0,1.719,0.771,1.719,1.719 C11.168,10.38,10.397,11.151,9.449,11.151z M22.004,22h-2.948v-4.616c0-1.101-0.02-2.517-1.533-2.517 c-1.535,0-1.771,1.199-1.771,2.437V22h-2.948v-9.492h2.83v1.297h0.04c0.394-0.746,1.356-1.533,2.791-1.533 c2.987,0,3.539,1.966,3.539,4.522V22z"></path>
+</svg>
+              
+           <div className='font-medium text-lg top-0 px-1 left-0 text-black rounded-tr-lg whitespace-nowrap'>
+             linkdn
+            {/* <h1 className='text-sm font-normal whitespace-nowrap'>{detail.ClubLdn} </h1> */}
               </div>
             </div>
-            <div className='inline flex m-1'>
-          
-            <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#000000"><path d="M687.33-80q-79.95 0-136.31-56.35-56.35-56.36-56.35-136.32 0-79.95 56.35-136.31 56.36-56.35 136.31-56.35 79.96 0 136.32 56.35Q880-352.62 880-272.67q0 79.96-56.35 136.32Q767.29-80 687.33-80Zm61.17-93.67 27.83-28-75-75v-112H662V-262l86.5 88.33ZM186.67-120q-27.5 0-47.09-19.58Q120-159.17 120-186.67v-586.66q0-28.34 19.17-47.5Q158.33-840 186.67-840H377q8.33-35 37.33-57.5T480-920q37.33 0 66.17 22.5Q575-875 583.33-840h190q28.34 0 47.5 19.17Q840-801.67 840-773.33v288.66q-16-10.33-32.34-17.65-16.35-7.32-34.33-13.01v-258h-66.66v100H253.33v-100h-66.66v586.66H444q5.67 17.34 13.33 33.67Q465-136.67 476-120H186.67ZM480-773.33q17 0 28.5-11.5t11.5-28.5q0-17-11.5-28.5t-28.5-11.5q-17 0-28.5 11.5t-11.5 28.5q0 17 11.5 28.5t28.5 11.5Z"/></svg>
-            <div className='font-medium text-lg px-1 top-0 left-0 text-black rounded-tr-lg whitespace-nowrap'>DeadLine
-              <h1 className='text-sm font-normal whitespace-nowrap'>{detail.DeadLine} </h1>
+            <div className='inline flex m-1 mt-4 '>
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 50 50">
+    <path d="M 16 3 C 8.83 3 3 8.83 3 16 L 3 34 C 3 41.17 8.83 47 16 47 L 34 47 C 41.17 47 47 41.17 47 34 L 47 16 C 47 8.83 41.17 3 34 3 L 16 3 z M 37 11 C 38.1 11 39 11.9 39 13 C 39 14.1 38.1 15 37 15 C 35.9 15 35 14.1 35 13 C 35 11.9 35.9 11 37 11 z M 25 14 C 31.07 14 36 18.93 36 25 C 36 31.07 31.07 36 25 36 C 18.93 36 14 31.07 14 25 C 14 18.93 18.93 14 25 14 z M 25 16 C 20.04 16 16 20.04 16 25 C 16 29.96 20.04 34 25 34 C 29.96 34 34 29.96 34 25 C 34 20.04 29.96 16 25 16 z"></path>
+</svg>
+             <div className='font-medium text-lg px-1 top-0 left-0 text-black rounded-tr-lg whitespace-nowrap'>instagram
+              {/* <h1 className='text-sm font-normal whitespace-nowrap'>{detail.ClubIG} </h1> */}
               </div>
             </div>
             </div>

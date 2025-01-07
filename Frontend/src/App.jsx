@@ -36,7 +36,8 @@ const Data =
         NoofMem:'3400+',
         offSite:'official site',
         description:' Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit iusto mollitia voluptas at quibusdam ratione veritatis asperiores maiores libero ducimus voluptatum, eligendi quos dicta eum, ab non quis ad? Omnis',
-        
+        ClubLdn:'www.google.com',
+        ClubIG:'www.google.com',
 
 }
 export const MyContext = createContext()
