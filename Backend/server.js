@@ -25,11 +25,6 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 const app = express();
 
-// MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('Connected to the database'))
-  .catch((err) => console.error('Error connecting to the database:', err));
-
 app.use(cookieParser());
 app.use(express.json());
 

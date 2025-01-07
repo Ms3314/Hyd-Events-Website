@@ -26,28 +26,27 @@ export async function FindUser (email) {
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
 export async function AddEvent (title , description , event_date , price , registration_link , organisation , event_image ) {
-    try {
-        const res = await prisma.event.create({
+        console.log(title , "the title we got")
+        await prisma.event.create({
             data : {
                 title ,
-                description ,
+                Description : description ,
                 event_date , 
                 price ,
                 registration_link ,
                 // so like we are connecting the event with an organisation
                 organisation : {
-                    connect : [
-                        {id : organisation}
-                    ]    
+                    connect :  {id : organisation} // connect to the organisation using ID 
                 },
                 event_image , 
             }
+        }).then((data)=> {
+            return data ; 
+        }
+        ).catch((err)=>{
+            console.log(err , "this is the error")
+            throw new Error("An Error have been occured when adding data", err)
         })
-        return res 
-    } catch (error) {
-        return new Error(error)
-    }
-    
 }
 
 

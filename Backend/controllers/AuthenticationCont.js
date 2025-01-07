@@ -9,7 +9,7 @@ import { AddUser } from '../models/adminModel.js';
 export const AuthController = {
     LoginAdmin : async (req , res) =>  {
         const {email } = req.body ;
-        const data = FindUser(email) 
+        const data = await FindUser(email) 
         // this is were I find some data of the user 
         if(data) {
             var token = jwt.sign({email : email }, process.env.SECRET_KEY);
@@ -34,11 +34,13 @@ export const AuthController = {
     RegisterUser : async (req , res) => {
         // registering this user here 
         const {name , email , college ,password} = req.body ;
+        console.log(name , email , college ,password)
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err , hash) {
                 // Store hash in your password DB.
-                const userData = AddUser(name , email , college , password = hash )
+                const userData = AddUser(name , email , college , hash )
                 // logging the user that will be created 
+                var token = jwt.sign({email : email }, process.env.SECRET_KEY);
                 if(userData) {
                     res.status(200).json({
                         status : "success" ,
