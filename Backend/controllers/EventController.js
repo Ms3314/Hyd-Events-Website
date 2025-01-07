@@ -2,15 +2,13 @@ import { AddEvent } from "../models/adminModel.js";
 
 export const EventController = {
     EventAddAdmin :  (req, res) => {
-        console.log("We have reached here")
-        const  {title , description , event_date , price , registration_link , event_image } = req.body ;
+        const  {title , description , eventDate , price , registrationLink , eventImage} = req.body ;
         // the event adding ka part 
         const organisation = req.userid ;
-        AddEvent(title , description , event_date , price , registration_link , organisation , event_image ).then((data)=>{
-            console.log("we came to the then block")
+        AddEvent(title , description , eventDate , price , registrationLink , organisation , eventImage ).then((data)=>{
             res.status(200).json({
                 status : "success" ,
-                message : "the even has been added " ,
+                message : "the event has been added " ,
                 data ,
             })
         }).catch((error)=>{
@@ -25,6 +23,6 @@ export const EventController = {
     } ,
     DisplayEvent : async (req , res) => {
         
-    }
+    }   
 }
 

@@ -21,9 +21,10 @@
 
 import express from "express";
 import adminRouter from "./routes/admin.js";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv'
 const app = express();
+dotenv.config()
 
 app.use(cookieParser());
 app.use(express.json());

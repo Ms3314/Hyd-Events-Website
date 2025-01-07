@@ -34,7 +34,6 @@ export const AuthController = {
     RegisterUser : async (req , res) => {
         // registering this user here 
         const {name , email , college ,password} = req.body ;
-        console.log(name , email , college ,password)
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err , hash) {
                 // Store hash in your password DB.
@@ -48,7 +47,6 @@ export const AuthController = {
                         token 
                     })
                 }
-                console.log(userData) ; 
             });
         });
     
