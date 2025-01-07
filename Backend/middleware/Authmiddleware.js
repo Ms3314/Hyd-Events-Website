@@ -33,6 +33,12 @@ export async function CheckEmailPass(req , res , next) {
 export async function CheckTokenExist(req , res , next ) {
     // what this function expects is just your token 
     const {token} = req.body ;
+    if(!token) {
+        res.status(500).json({
+            status : "error" ,
+            message : "You are not verified to access this route" ,
+        })
+    }
         // console.log(decoded.user) // bar
         try {    
                 jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
@@ -51,7 +57,7 @@ export async function CheckTokenExist(req , res , next ) {
         } catch (error) {
             res.status(500).json({
                 status : "error" ,
-                message : "Something went wrong due to not able to verify you" ,
+                message : "You are not verified to access this route" ,
                 error ,
             })
         }

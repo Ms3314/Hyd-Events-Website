@@ -45,7 +45,7 @@ export async function AddEvent (title , description , eventDate , price , regist
         })
 }
 
-
+// this function check if the event exist when given the event id 
 
 export async function CheckEventExist (eventid) {
     try {
@@ -58,14 +58,45 @@ export async function CheckEventExist (eventid) {
             throw new Error("couldnt find the event with this id");
         }
     } catch (error) {
-        throw new Error(error.message || "An error occured while ediitng this event")
+        throw new Error(error.message || "Does this event Exist ?? ")
     }    
     
 
 }
 
+// findiing all 
+export async function FindAllEvent (organisation) {
+    try {
+        const res = await prisma.event.findMany({
+            where : {
+                organisation 
+            }
+        })
+        return res
+    } catch (error) {
+        throw new Error(error.message || "An error occured while finding the events of the organisation")      
+    }
+}
+
+
+export async function DeleteEvent (organisation , eventid) {
+    await CheckEventExist(eventid)
+    try {
+        console.log(eventid , "Diddy get the evnt id")
+        const res = await prisma.event.delete({
+            where : {
+                id : eventid,  
+                organization : organisation 
+            }
+        })
+        return true
+    } catch (error) {
+        throw new Error("An Error Occured while Deleting the Event")
+    }
+}
+
 // NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
-// edding feature 
+// editing feature 
 // basically ak se main pura kar de sakne isme i dont have to everything 
 export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image ) {
     // need to check if an existing event like this exist or not right 
@@ -74,9 +105,7 @@ export async function EditEvent (  eventid , title , description , event_date , 
             await prisma.event.update({
                 where : {
                     id : eventid,
-                    organisation : {
-                        some : {id : organisation}
-                    }
+                    organisation : organisation
                 } , 
                 data : {
                     title ,
