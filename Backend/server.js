@@ -21,14 +21,10 @@
 
 import express from "express";
 import adminRouter from "./routes/admin.js";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import dotenv from 'dotenv'
 const app = express();
-
-// MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('Connected to the database'))
-  .catch((err) => console.error('Error connecting to the database:', err));
+dotenv.config()
 
 app.use(cookieParser());
 app.use(express.json());
