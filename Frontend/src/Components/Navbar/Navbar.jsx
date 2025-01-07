@@ -1,9 +1,7 @@
 import React from 'react'
 import ResponsiveMenu from './ResponsiveMenu'; 
 import hydEventsLogo from '../../assets/hydEventsLogo.png'; 
-import HomePage from '../Pages/HomePage';
-import EventPage from '../Pages/EventPage';
-import About from '../Pages/About';
+
 import { NavLink } from 'react-router-dom';
 
 const NavbarMenu = [

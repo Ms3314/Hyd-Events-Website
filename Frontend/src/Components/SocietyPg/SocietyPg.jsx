@@ -1,10 +1,8 @@
 import React, { useContext,useState } from 'react'
 import { MyContext } from '../../App'
 import Cards from '../Cards/Cards'
-import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 import Button from '../Cards/Button'
-import linkedin from '../../assets/linkedin.png'
+
 const SocietyPg = () => {
   const {data,setData} = useContext(MyContext)
   console.log(data , "This is the data")
