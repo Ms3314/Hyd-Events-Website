@@ -10,7 +10,6 @@ export async function AddUser(name , email , college ,password ) {
             college ,
         }
     })
-    console.log(res , "the data we send");
     return res ; 
 }
 
@@ -20,37 +19,33 @@ export async function FindUser (email) {
             email
         }
     })
-    console.log(res , "this is the user with the unique email")
     return res ;
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
-export async function AddEvent (title , description , event_date , price , registration_link , organisation , event_image ) {
-    try {
-        const res = await prisma.event.create({
+export async function AddEvent (title , description , eventDate , price , registrationLink , organisation , eventImage ) {
+        await prisma.event.create({
             data : {
                 title ,
                 description ,
-                event_date , 
+                eventDate , 
                 price ,
-                registration_link ,
+                registrationLink ,
                 // so like we are connecting the event with an organisation
-                organisation : {
-                    connect : [
-                        {id : organisation}
-                    ]    
+                organization : {
+                    connect :  {id : organisation} // connect to the organisation using ID 
                 },
-                event_image , 
+                eventImage , 
             }
+        }).then((data)=> {
+            return data ; 
+        }
+        ).catch((err)=>{
+            throw new Error("An Error have been occured when adding data", err)
         })
-        return res 
-    } catch (error) {
-        return new Error(error)
-    }
-    
 }
 
-
+// this function check if the event exist when given the event id 
 
 export async function CheckEventExist (eventid) {
     try {
@@ -63,14 +58,45 @@ export async function CheckEventExist (eventid) {
             throw new Error("couldnt find the event with this id");
         }
     } catch (error) {
-        throw new Error(error.message || "An error occured while ediitng this event")
+        throw new Error(error.message || "Does this event Exist ?? ")
     }    
     
 
 }
 
+// findiing all 
+export async function FindAllEvent (organisation) {
+    try {
+        const res = await prisma.event.findMany({
+            where : {
+                organisation 
+            }
+        })
+        return res
+    } catch (error) {
+        throw new Error(error.message || "An error occured while finding the events of the organisation")      
+    }
+}
+
+
+export async function DeleteEvent (organisation , eventid) {
+    await CheckEventExist(eventid)
+    try {
+        console.log(eventid , "Diddy get the evnt id")
+        const res = await prisma.event.delete({
+            where : {
+                id : eventid,  
+                organization : organisation 
+            }
+        })
+        return true
+    } catch (error) {
+        throw new Error("An Error Occured while Deleting the Event")
+    }
+}
+
 // NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
-// edding feature 
+// editing feature 
 // basically ak se main pura kar de sakne isme i dont have to everything 
 export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image ) {
     // need to check if an existing event like this exist or not right 
@@ -79,9 +105,7 @@ export async function EditEvent (  eventid , title , description , event_date , 
             await prisma.event.update({
                 where : {
                     id : eventid,
-                    organisation : {
-                        some : {id : organisation}
-                    }
+                    organisation : organisation
                 } , 
                 data : {
                     title ,
