@@ -1,12 +1,13 @@
-import { AddEvent, DeleteEvent, EditEvent, FindAllEvent } from "../models/adminModel.js";
+import { AddEvent, DeleteEvent, EditEvent } from "../models/adminModel.js";
+import { FindAllEventOfOrganization } from "../models/commonModel.js";
 
 export const EventController = {
     EventAddAdmin :  (req, res) => {
-        const  {title , description , eventDate , price , registrationLink , eventImage} = req.body ;
+        const  {title , description , eventDate , price , registrationLink , eventImage , formLink} = req.body ;
         // the event adding ka part 
         const organisation = req.userid ;
         console.log("orgnisation of the token" , req.userid)
-        AddEvent(title , description , eventDate , price , registrationLink , organisation , eventImage ).then((data)=>{
+        AddEvent(title , description , eventDate , price , registrationLink , organisation , eventImage , formLink ).then((data)=>{
             res.status(200).json({
                 status : "success" ,
                 message : "the event has been added " ,
@@ -41,7 +42,7 @@ export const EventController = {
     DisplayEvents : async (req ,res) => {
         const organization = req.userid 
         try {
-            const data = await FindAllEvent(organization)
+            const data = await FindAllEventOfOrganization(organization)
             res.status(200).json({
                 status : "Success",
                 payload : data 
