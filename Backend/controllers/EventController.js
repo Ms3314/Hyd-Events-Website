@@ -1,10 +1,11 @@
-import { AddEvent, DeleteEvent, FindAllEvent } from "../models/adminModel.js";
+import { AddEvent, DeleteEvent, EditEvent, FindAllEvent } from "../models/adminModel.js";
 
 export const EventController = {
     EventAddAdmin :  (req, res) => {
         const  {title , description , eventDate , price , registrationLink , eventImage} = req.body ;
         // the event adding ka part 
         const organisation = req.userid ;
+        console.log("orgnisation of the token" , req.userid)
         AddEvent(title , description , eventDate , price , registrationLink , organisation , eventImage ).then((data)=>{
             res.status(200).json({
                 status : "success" ,
@@ -22,9 +23,10 @@ export const EventController = {
     
     } ,
     DeleteOneEvent : async (req , res) => {
-        const {organisation , eventid} = req.body ;
+        const { eventid} = req.body ;
+        const organization = req.userid
         try {
-            const data = await DeleteEvent(organisation , eventid)
+            await DeleteEvent(organization , eventid)
             res.status(200).json({
                 status : "Success" ,
                 message : "The following event was deleted"
@@ -37,9 +39,9 @@ export const EventController = {
         }
     }, 
     DisplayEvents : async (req ,res) => {
-        const {organisation} = req.body ;
+        const organization = req.userid 
         try {
-            const data = await FindAllEvent(organisation)
+            const data = await FindAllEvent(organization)
             res.status(200).json({
                 status : "Success",
                 payload : data 
@@ -50,6 +52,22 @@ export const EventController = {
                 message : error.message
             })
         }
-    }       
+    },
+    EditOneEvent : async (req , res) => {
+        const {eventid , ...updates} = req.body ;
+        try {
+            const update = await EditEvent(eventid , updates) ;
+            res.status(200).json({
+                status :"Success" ,
+                payload : update ,
+                message : " Event has been updated successfully" ,
+            })
+        } catch (error) {
+            res.status(500).json({
+                status : "Error" ,
+                message : error.message ,
+            })
+        }
+    }
 }
 
