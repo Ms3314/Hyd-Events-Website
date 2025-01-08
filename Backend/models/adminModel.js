@@ -14,16 +14,20 @@ export async function AddUser(name , email , college ,password ) {
 }
 
 export async function FindUser (email) {
-    const res = await prisma.organization.findUnique({
-        where : {
-            email
-        }
-    })
-    return res ;
+    try {
+        const res = await prisma.organization.findUnique({
+            where : {
+                email
+            }
+        })
+        return res ;
+    } catch (error) {
+        throw new Error(error.message || "Error while finding the user")
+    }
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
-export async function AddEvent (title , description , eventDate , price , registrationLink , organisation , eventImage ) {
+export async function AddEvent (formLink , title , description , eventDate , price , registrationLink , organisation , eventImage ) {
         await prisma.event.create({
             data : {
                 title ,
@@ -31,6 +35,7 @@ export async function AddEvent (title , description , eventDate , price , regist
                 eventDate , 
                 price ,
                 registrationLink ,
+                formLink , 
                 // so like we are connecting the event with an organisation
                 organization : {
                     connect :  {id : organisation} // connect to the organisation using ID 
@@ -41,7 +46,7 @@ export async function AddEvent (title , description , eventDate , price , regist
             return data ; 
         }
         ).catch((err)=>{
-            throw new Error("An Error have been occured when adding data", err)
+            throw new Error(error.message || "An Error have been occured when adding data", err)
         })
 }
 
@@ -65,19 +70,6 @@ export async function CheckEventExist (eventid) {
 }
 
 // findiing all 
-export async function FindAllEvent (organisation) {
-    try {
-        const res = await prisma.event.findMany({
-            where : {
-                organisation 
-            }
-        })
-        return res
-    } catch (error) {
-        throw new Error(error.message || "An error occured while finding the events of the organisation")      
-    }
-}
-
 
 export async function DeleteEvent (organisation , eventid) {
     await CheckEventExist(eventid)
@@ -86,43 +78,41 @@ export async function DeleteEvent (organisation , eventid) {
         const res = await prisma.event.delete({
             where : {
                 id : eventid,  
-                organization : organisation 
+                organizationId : organisation , 
             }
         })
-        return true
+        return res
     } catch (error) {
         throw new Error("An Error Occured while Deleting the Event")
     }
 }
 
-// NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
 // editing feature 
-// basically ak se main pura kar de sakne isme i dont have to everything 
-export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image ) {
+// only takes which is rwequired only supposed to 
+export async function EditEvent (  eventid , updates) {
     // need to check if an existing event like this exist or not right 
         try {
             await CheckEventExist(eventid)
-            await prisma.event.update({
-                where : {
-                    id : eventid,
-                    organisation : organisation
-                } , 
-                data : {
-                    title ,
-                    description ,
-                    event_date , 
-                    price ,
-                    registration_link ,
-                    organisation ,
-                    event_image 
-                }
-            
-        }) 
+            // Dynamically include only provided fields
+            const dataToUpdate = {};
+            if (updates.title) dataToUpdate.title = updates.title;
+            if (updates.description) dataToUpdate.description = updates.description;
+            if (updates.eventDate) dataToUpdate.eventDate = updates.eventDate;
+            if (updates.price !== undefined) dataToUpdate.price = updates.price;
+            if (updates.registrationLink) dataToUpdate.registrationLink = updates.registrationLink;
+            if (updates.organisation) dataToUpdate.organisation = { connect: { id: updates.organisation } };
+            if (updates.eventImage) dataToUpdate.eventImage = updates.eventImage;
+            if (updates.formLink) dataToUpdate.formLink = updates.formLink 
+    // Update the event
+            const updatedEvent = await prisma.event.update({
+                where: { id: eventid },
+                data: dataToUpdate,
+            });
+            return updatedEvent
         } catch (error) {
             throw new Error(error.message || "An error occured while editing the event")
         }
             
-       
 }
 
 

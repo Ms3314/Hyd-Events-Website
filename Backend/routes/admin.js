@@ -7,5 +7,7 @@ const adminRouter = express.Router();
 
 adminRouter.route('/signin').post( CheckEmailPass, AuthController.LoginAdmin)
 adminRouter.route('/signup').post(AuthController.RegisterUser)
-adminRouter.route('/event').post(CheckTokenExist , EventController.EventAddAdmin).get(CheckTokenExist , EventController.DisplayEvents).delete(CheckTokenExist , EventController.DeleteOneEvent)
+adminRouter.route('/event').post(CheckTokenExist , EventController.EventAddAdmin).get(CheckTokenExist , EventController.DisplayEvents).delete(CheckTokenExist , EventController.DeleteOneEvent).put(CheckTokenExist , EventController.EditOneEvent)
+
+
 export default adminRouter
