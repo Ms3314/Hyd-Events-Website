@@ -21,7 +21,7 @@ const EventsDetailpage = () => {
     <div className='flex flex-col sm:flex-row box-content rounded-lg text-white-50 shadow-lg bg-black m-5'>
         <div className='container flex h-full w-full sm:w-1/3 mb-40'>
         banner holder
-        <img src={data.orgBanner}/>
+        <img src={data.organization.orgBanner}/>
         </div>
     </div>
         {/* details  */}

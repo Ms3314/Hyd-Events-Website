@@ -19,8 +19,8 @@ model Organization {
   password  String
   name      String
   college   String
-  orgPic    String?
-  orgBanner String?
+  orgPic    String?  @default("https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-b135bb1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg")
+  orgBanner String?  @default("https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-b135bb1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg")
   socials   String[] // Keeping consistent camelCase
   events    Event[]  // One-to-many relationship
 }
@@ -32,10 +32,10 @@ model Event {
   eventDate          DateTime
   price              Int           @default(0)
   registrationLink   String
-  formLink           String        @default("")
+  formLink           String        @default("https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-b135bb1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg")
   views              Int?
   formClicks         Int?
-  eventImage         String?             
+  eventImage         String?       @default("https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-b135bb1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg")      
   organizationId     Int           // Foreign key
   organization       Organization  @relation(fields: [organizationId], references: [id])
 }

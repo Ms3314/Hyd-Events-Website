@@ -59,6 +59,7 @@ const Cardcomponent = ({item}) => {
     function SpecificEventPage  (item)  {
         // here i got the data of the card
         console.log("the data we will be setting as cotext in the cards" , item)
+        item.eventDate = formattedDate ; 
         setData(item)
         navigate("/evntdetails");
     }   
