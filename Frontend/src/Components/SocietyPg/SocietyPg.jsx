@@ -10,11 +10,11 @@ const SocietyPg = () => {
 
   return (
     <div>
-       <div className='grid lg:grid-cols-3 grid-cols-1 flex'>
+       <div className='grid lg:grid-cols-3 grid-cols-1 '>
           <div className='col-span-2 box-content bg-blue-50 p-4 rounded-lg shadow-lg h-80 m-5'>
 
             <div className='relative w-32 h-48 border-1 shadow-2xl m-2 rounded-2xl inline-flex'>
-              <img src={detail.ClubLogo} alt={detail.ClubName}/>
+              <img  src={detail.ClubLogo} alt={detail.ClubName}/>
               <div className='font-bold sm:text-xl lg:text-3xl m-4 top-0 left-0 text-black p-6 rounded-tr-lg whitespace-nowrap'>{detail.ClubName}
               <h3 className='lg:text-xl sm:text-lg whitespace-nowrap'>Lorem ipsum dolor sit amet consectetur 
               </h3>

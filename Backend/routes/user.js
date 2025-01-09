@@ -1,5 +1,5 @@
 import express from 'express';
-import { UserController } from '../controllers/UserControllers';
+import { UserController } from '../controllers/UserControllers.js';
 const UserRouter = express.Router();
 
 UserRouter.route('/event').get(UserController.DisplayAllEvents)

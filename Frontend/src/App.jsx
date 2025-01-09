@@ -51,10 +51,10 @@ const [data , setData] = useState(Data)
     <Routes>
       <Route path="/" element={<Layout />} >
           < Route index element={<HomePage />} />
-          < Route path='/about' element={<About />} />
-          < Route path='/events' element={<EventPage />} />
-          < Route path='/evntdetails' element={<EventsDetailpage />} />
-          < Route path='/societydetails' element={<SocietyPg/>} />
+          < Route path ='/about' element={<About />} />
+          < Route path ='/events' element={<EventPage />} />
+          < Route path ='/evntdetails' element={<EventsDetailpage />} />
+          < Route path ='/societydetails' element={<SocietyPg/>} />
       </Route>
     </Routes>
   </BrowserRouter>

@@ -1,4 +1,4 @@
-import { AllEvents, FindAllEventOfOrganization, FindOrganizationDetailsById } from "../models/commonModel"
+import { AllEvents, FindAllEventOfOrganization, FindOrganizationDetailsById } from "../models/commonModel.js"
 
 export const UserController = {
     DisplayAllEvents : async (req , res) =>{

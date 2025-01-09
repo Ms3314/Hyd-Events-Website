@@ -4,7 +4,11 @@ const prisma = new PrismaClient();
 //Preview Events 
 export async function AllEvents() {
     try {
-        const res = await prisma.event.findMany()
+        const res = await prisma.event.findMany({
+            include : {
+                organization : true
+            }
+        })
         return res
     } catch (error) {
         throw new Error(error.message || "An error occured while finding the events ")      
