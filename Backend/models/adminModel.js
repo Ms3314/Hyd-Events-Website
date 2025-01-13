@@ -27,12 +27,14 @@ export async function FindUser (email) {
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
-export async function AddEvent (formLink , title , description , eventDate , price , registrationLink , organisation , eventImage ) {
+export async function AddEvent (location , deadline , formLink , title , description , eventDate , price , registrationLink , organisation , eventImage ) {
         await prisma.event.create({
             data : {
                 title ,
                 description ,
                 eventDate , 
+                location ,
+                deadline ,
                 price ,
                 registrationLink ,
                 formLink , 
@@ -103,6 +105,8 @@ export async function EditEvent (  eventid , updates) {
             if (updates.organisation) dataToUpdate.organisation = { connect: { id: updates.organisation } };
             if (updates.eventImage) dataToUpdate.eventImage = updates.eventImage;
             if (updates.formLink) dataToUpdate.formLink = updates.formLink 
+            if (updates.location) data.dataToUpdate.location = updates.location 
+            if (updates.deadline) data.dataToUpdate.deadline = updates.deadline 
     // Update the event
             const updatedEvent = await prisma.event.update({
                 where: { id: eventid },
