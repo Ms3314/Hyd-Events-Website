@@ -7,6 +7,7 @@ export const EventController = {
         // the event adding ka part 
         const organisation = req.userid ;
         console.log("orgnisation of the token" , req.userid)
+        console.log("this is the description" , description)
         AddEvent(location , deadline , title , description , eventDate , price , registrationLink , organisation , eventImage , formLink ).then((data)=>{
             res.status(200).json({
                 status : "success" ,

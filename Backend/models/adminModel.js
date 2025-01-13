@@ -27,11 +27,12 @@ export async function FindUser (email) {
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
-export async function AddEvent (location , deadline , formLink , title , description , eventDate , price , registrationLink , organisation , eventImage ) {
-        await prisma.event.create({
+export async function AddEvent (location , deadline , title , description , eventDate , price , registrationLink , organisation , eventImage , formLink ) {
+    console.log("this is the description" , description)
+    await prisma.event.create({
             data : {
                 title ,
-                description ,
+                description : description,
                 eventDate , 
                 location ,
                 deadline ,
@@ -48,6 +49,7 @@ export async function AddEvent (location , deadline , formLink , title , descrip
             return data ; 
         }
         ).catch((err)=>{
+            console.log(err)
             throw new Error(error.message || "An Error have been occured when adding data", err)
         })
 }
