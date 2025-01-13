@@ -1,5 +1,5 @@
 import { AddEvent, DeleteEvent, EditEvent } from "../models/adminModel.js";
-import { FindAllEventOfOrganization } from "../models/commonModel.js";
+import { FindAllEventOfOrganization, FindEventByGenre } from "../models/commonModel.js";
 
 export const EventController = {
     EventAddAdmin :  (req, res) => {
@@ -69,6 +69,23 @@ export const EventController = {
                 message : error.message ,
             })
         }
+    },
+    FindEventGenre : async (req , res) =>{
+        const {genre} = req.body ;
+        try {
+            const event = await FindEventByGenre(genre)
+            res.status(200).json({
+                status :"Success" ,
+                payload : event ,
+                message : "Event has been updated successfully" ,
+            })
+        } catch (error) {
+            res.status(500).json({
+                status : "Error" ,
+                message : error.message ,
+            })
+        }
+
     }
 }
 

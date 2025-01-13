@@ -39,7 +39,23 @@ export async function FindOrganizationDetailsById (organisation) {
         })
         return res
     } catch (error) {
-        throw new Error(error.message || "Could not find the error")
+        throw new Error(error.message || "DB error while finding organization ")
     }
 }
 
+export async function FindEventByGenre(genre) {
+    try {
+        const genrEvents = await prisma.event.findMany({
+            where: {
+              genre: {
+                has: genre,
+              },
+            },
+          });
+        return genrEvents
+    } catch (error) {
+        throw new Error(error.message || "Database error while finding genre")
+
+    }
+
+}
