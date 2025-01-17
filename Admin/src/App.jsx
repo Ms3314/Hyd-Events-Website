@@ -1,34 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState ,createContext } from 'react'
+import Login from './Login-Register/Login/Login'
+import Register from './Login-Register/Register/Register'
+import img1 from './assets/img1.png'
+import {
+  Route,
+  Routes,
+  BrowserRouter,
+} from "react-router-dom";
+import Homepg from './Components/Pages/Homepg';
+import Layout from './Layout';
+import AddEvents from './Components/AddEvents/AddEvents';
+import EditEvent from './Components/Pages/EditEvent';
+import Settingpg from './Components/Pages/Settingpg';
+
+
+const Content = 
+    {
+        id:1,
+        Venue:'MJCET hYderabad',
+        month:'oct',
+        Date:'23',
+        EventName:'Dev Expedation',
+        Timings:'1:00-2:00',
+        imgSrc:img1,
+        EventName:"HAck rev"
+    }
+export const MyDetail = createContext()
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [content, setContent] = useState(Content)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <MyDetail.Provider value={{content,setContent}}>
+     <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Layout/>}>
+            <Route index element={<Homepg/>}/>
+            <Route path='/Login' element={<Login/>}/>
+            <Route path='/Register' element={<Register/>}/>
+            <Route path='/events' element={<AddEvents/>}/>
+            <Route path='/editevent' element={<EditEvent/>}/>
+            <Route path='/settings' element={<Settingpg/>}/>
+          </Route>
+        </Routes>
+     </BrowserRouter>
+    </MyDetail.Provider>
   )
 }
 
