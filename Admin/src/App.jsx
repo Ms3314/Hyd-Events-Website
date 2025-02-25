@@ -1,4 +1,4 @@
-import { useState ,createContext } from 'react'
+import { useState ,createContext, useEffect } from 'react'
 import Login from './Login-Register/Login/Login'
 import Register from './Login-Register/Register/Register'
 import img1 from './assets/img1.png'
@@ -29,25 +29,36 @@ export const MyDetail = createContext()
 
 
 function App() {
-
+  const token = localStorage.getItem("token")
   const [content, setContent] = useState(Content)
-
+  if (!token) {
+    return (
+    <BrowserRouter>
+        <Routes>
+          <Route path='/'>
+              <Route path='/' element={<Login/>}/>
+              <Route path='/Register' element={<Register/>}/>
+          </Route>
+        </Routes>
+     </BrowserRouter>
+  )
+  }
+  if (token) {
   return (
     <MyDetail.Provider value={{content,setContent}}>
      <BrowserRouter>
-        <Routes>
+        { <Routes>
           <Route path='/' element={<Layout/>}>
             <Route index element={<Homepg/>}/>
-            <Route path='/Login' element={<Login/>}/>
-            <Route path='/Register' element={<Register/>}/>
             <Route path='/events' element={<AddEvents/>}/>
             <Route path='/editevent' element={<EditEvent/>}/>
             <Route path='/settings' element={<Settingpg/>}/>
           </Route>
-        </Routes>
+        </Routes>}
      </BrowserRouter>
     </MyDetail.Provider>
   )
+}
 }
 
 export default App

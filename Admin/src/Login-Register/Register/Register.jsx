@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import axios from "axios"
 import toast, { Toaster } from 'react-hot-toast'
+import Footer from '../../Components/Footer/Footer'
+import AuthNav from '../../Components/Navbar/AuthNav'
 // import Login from '../Login/Login'
 const Register = () => {
     const [registerData , setRegisterData] = useState({
@@ -26,7 +28,9 @@ const Register = () => {
             toast.success("Account has been created successfully ")
             toast.success("Please Login to continue")
             console.log("the data has been set")
-            navigate("/Login");
+            setTimeout(()=>{   
+                navigate("/");
+            },300)
         } else {
             alert("No data available")
             console.log(payload.data.message)
@@ -34,6 +38,8 @@ const Register = () => {
     }
   return (
     <div>
+        <AuthNav/>
+
         <Toaster
             position="bottom-right"
             reverseOrder={false}
@@ -79,9 +85,10 @@ const Register = () => {
             </div>
             <div className='flex justify-center items-center p-2 m-2'>
                 Already have an Account ?
-                <Link className='text-red-600 p-1' to='/Login'>Login</Link>
+                <Link className='text-red-600 p-1' to='/'>Login</Link>
             </div>
         </div>
+        
     </div>
   )
 }

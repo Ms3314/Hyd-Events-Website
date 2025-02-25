@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Register from '../Register/Register'
 import axios from 'axios'
+import AuthNav from '../../Components/Navbar/AuthNav'
 const Login = () => {
     const [loginData , setLoginData] = useState({
         'email' : "",
@@ -21,7 +21,7 @@ const Login = () => {
         if (payload.status == 200) {
             const token = payload.data.token;
             localStorage.setItem("token",token);
-            console.log("the data has been set")
+            window.location.reload();
         } else {
             alert("No data available")
             console.log(payload.data.message)
@@ -29,6 +29,8 @@ const Login = () => {
     }
   return (
     <div >
+        <AuthNav/>
+
         <div className='flex flex-col bg-gray-300 justify-center items-center w-full max-w-md mx-auto my-16 shadow-lg rounded-lg'>
         {/* <div className='flex flex-col bg-gray-300 justify-center items-center w-75 mx-96 my-32 shadow-lg rounded-lg'> */}
             <div className='flex justify-center items-center m-2 w-48 h-10 bg-white rounded-lg mt-12'>
@@ -56,7 +58,7 @@ const Login = () => {
                 <Link className='text-red-600 p-1' to="/Register">Register</Link>
             </div>
         </div>
-
+    
     </div>
   )
 }
