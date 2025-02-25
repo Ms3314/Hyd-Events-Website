@@ -2,26 +2,31 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function AddUser(name , email , college ,password ) {
-    const res = await prisma.organization.create({
-        data : {
-            name ,
-            email ,
-            password ,
-            college ,
-        }
-    })
-    console.log(res , "the data we send");
-    return res ; 
+    try {
+        const res = await prisma.organization.create({
+            data : {
+                name ,
+                email ,
+                password ,
+                college ,
+            }
+        })
+        console.log(res , "the data we send");
+        return res ;  
+    } catch (error) {
+        return error;
+    }
+    
 }
 
 export async function FindUser (email) {
-    const res = await prisma.organization.findUnique({
-        where : {
-            email
-        }
-    })
-    console.log(res , "this is the user with the unique email")
-    return res ;
+        const res = await prisma.organization.findUnique({
+            where : {
+                email
+            }
+        })  
+        console.log(res , "this is the user with the unique email")
+        return res ; 
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 

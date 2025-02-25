@@ -100,11 +100,21 @@ const Cardcomponent = ({item}) => {
               <div className="text-sm text-gray-600 m-1">{item.Venue}</div>
               </div>
         
-    <AlertDialog.Root>
+    
+    <AlertComponent/>
+    <button className='flex-inline bottom-2 bg-slate-200 rounded-lg text-black py-1 px-4 w-16 text-lg font-bold m-4 left-8 text-center shadow-md' key={item.id} onClick={()=>EditEventPage(item)}>Edit</button> 
+      </div>
+    </div>
+
+    )
+}
+
+const AlertComponent = () => {
+  return (
+    <>
+      <AlertDialog.Root>
 		<AlertDialog.Trigger asChild>
-		<button className='bottom-2 items-center px-4 py-1 left-8 bg-slate-200 text-black text-lg text-white font-bold rounded-lg shadow-md'>Delete</button>
-		
-		
+		<button className='bottom-2 items-center px-4 py-1 left-8 bg-red-600  text-lg text-white font-bold rounded-lg shadow-md'>Delete</button>
         </AlertDialog.Trigger>
 		      <AlertDialog.Portal>
 			      <AlertDialog.Overlay className="AlertDialogOverlay" />
@@ -126,13 +136,9 @@ const Cardcomponent = ({item}) => {
 				    </div>
 			      </AlertDialog.Content>
 		      </AlertDialog.Portal>
-	      </AlertDialog.Root>
- 
-    <button className='flex-inline bottom-2 bg-slate-200 rounded-lg text-black py-1 px-4 w-16 text-lg font-bold m-4 left-8 text-center shadow-md' key={item.id} onClick={()=>EditEventPage(item)}>Edit</button> 
-      </div>
-    </div>
-
-    )
+	  </AlertDialog.Root>
+    </>
+  )
 }
 
 export default Cards

@@ -2,6 +2,7 @@
 CREATE TABLE "Organization" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "college" TEXT NOT NULL,
     "orgPic" TEXT,

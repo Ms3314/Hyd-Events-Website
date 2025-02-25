@@ -1,14 +1,20 @@
 // need to make a middleware that checks if the user exists and also exists and verifies the password of this thing 
-
+import bcrypt from "bcryptjs"
 import { FindUser } from "../models/adminModel.js";
 // just checking like the user exists and the password 
 
 export async function CheckEmailPass(req , res , next) {
-    const { email  ,password} = req.body ;
-    const user = FindUser(email) ; ``
+    const { email  , password} = req.body ;
+    console.log(email , password)
+    const user = await FindUser(email) ; 
     if(user) {
-        bcrypt.compare(user.password , password, function(err, res) {
-            if (res === true) {
+        console.log("the user is found")
+        console.log(user.password , "from the user")
+        console.log(password)
+        bcrypt.compare(password , user.password, function(err, output) {
+            console.log(output , "the ourput")
+            if (output === true) {
+                console.log("password is matching")
                 next() 
             }
             else {
@@ -20,6 +26,7 @@ export async function CheckEmailPass(req , res , next) {
         });
     }
     else {
+        console.log("Cannot find your data try creating a new account")
         res.status(500).json({
             status : "error" , 
             message : "Credentials error"

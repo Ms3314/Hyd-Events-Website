@@ -1,22 +1,28 @@
-import React ,{useState} from 'react'
+import React ,{useEffect, useState} from 'react'
+import toast, { Toaster } from 'react-hot-toast';
+import { storage } from '../../firebase/config';
+import { getDownloadURL, ref , uploadBytes} from 'firebase/storage';
+import {v4} from 'uuid';
 
 const AddEvents = () => {
-
+  const [imageUpload , setImageUpload] = useState(null);
   const [events, setEvents] = useState([]);
+  const [isFree , setIsFree] = useState();
   const [currentEvent, setCurrentEvent] = useState({
     title: '',
     description: '',
     date: '',
     time:'',
     venue: '',
-    selectType:'',
+    selectType:'2',
     price: '',
-    formLink: ''
+    formLink: '',
+    image : '',
   });
 
-  const handleEventSubmit = (e) => {
-    e.preventDefault();
-    setEvents(prevEvents => [prevEvents, currentEvent]);
+  const finalSubmit = () => {
+    console.log(currentEvent , "this is the current event")
+    console.log(events , "these are the events");
     setCurrentEvent({
       title: '',
       description: '',
@@ -27,9 +33,45 @@ const AddEvents = () => {
       price: '',
       formLink: ''
     });
+
+  }
+  // const checkAnyEmpty = () => {
+  //    if (currentEvent.date == '') return false ;
+  //    else if (currentEvent.description == '') return false ;
+  //    else if (currentEvent.formLink == '') return false ;
+  //    else if (currentEvent.price == '') return false ;
+  //    else if (currentEvent.selectType == '') return false ;
+  //    else if (currentEvent.time == '') return false ;
+  //    else if (currentEvent.title == '') return false ;
+  //    else if (currentEvent.venue == '') return false ;
+  //   else return true
+  // }
+  const handleEventSubmit = (e) => {
+    e.preventDefault();
+    
+    if (imageUpload == null) {
+      toast.error("Please enter an Poster/related image");
+      return ;
+    } 
+    console.log(currentEvent)
+    
+    const imageref = ref(storage , `images/${imageUpload.name + v4() }`)
+    uploadBytes(imageref , imageUpload).then((res)=>{
+      toast("The image has been uploaded");
+      getDownloadURL(res.ref).then((ans)=>{
+        currentEvent.image = ans;
+      });
+      finalSubmit();
+    })
   };
+
+  useEffect(()=>{
+    console.log(currentEvent)
+  },[currentEvent])
+
   return (
     <div className="form-container bg-gray-300 rounded-lg p-6 shadow-md min-h-screen flex justify-center items-center">
+      <Toaster />
       <div className="flex flex-col bg-white justify-center items-center w-full max-w-md mx-auto shadow-lg rounded-lg">
         <form
           onSubmit={handleEventSubmit}
@@ -44,7 +86,7 @@ const AddEvents = () => {
                 placeholder="Event Name"
                 value={currentEvent.title}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, title: e.target.value })
+                  setCurrentEvent((prev) => ({ ...prev , title : e.target.value }))
                 }
               />
             </div>
@@ -57,7 +99,7 @@ const AddEvents = () => {
                 placeholder="Description"
                 value={currentEvent.description}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, description: e.target.value })
+                  setCurrentEvent((prev)=>({ ...prev, description: e.target.value }))
                 }
               />
             </div>
@@ -68,7 +110,7 @@ const AddEvents = () => {
                 type="date"
                 value={currentEvent.date}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, date: e.target.value })
+                  setCurrentEvent((prev)=> ({ ...prev, date: e.target.value }))
                 }
               />
               <input
@@ -76,7 +118,7 @@ const AddEvents = () => {
                 type="time"
                 value={currentEvent.time}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, time: e.target.value })
+                  setCurrentEvent((prev) => ({ ...prev, time: e.target.value }))
                 }
                 placeholder="Time"
               />
@@ -90,7 +132,7 @@ const AddEvents = () => {
                 placeholder="Venue"
                 value={currentEvent.venue}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, venue: e.target.value })
+                  setCurrentEvent((prev) => ({ ...prev , venue: e.target.value }))
                 }
               />
             </div>
@@ -102,42 +144,62 @@ const AddEvents = () => {
                 id="price"
                 value={currentEvent.selectType}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, selectType: e.target.value })
+                  setCurrentEvent((prev)=> ({ ...prev, selectType: e.target.value }))
                 }
                 className="border-2 rounded-lg p-2 w-full"
               >
                 <option value="1">Paid</option>
                 <option value="2">Free</option>
               </select>
-           
-            <input
-                className="border-2 rounded-lg p-2 w-full"
+            
+            {currentEvent.selectType == "1" ? (
+              <input
+              className={`border-2 rounded-lg p-2 disabled w-full `}
+              type="text"
+              placeholder="Price"
+              value={currentEvent.price}
+              onChange={(e) =>
+                setCurrentEvent((prev) => ({ ...prev , price: e.target.value }))
+              }
+              />
+            ): 
+            (
+              <input
+                disabled
+                className={`border-2 rounded-lg p-2 disabled w-full `}
                 type="text"
                 placeholder="Price"
                 value={currentEvent.price}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, price: e.target.value })
+                  setCurrentEvent((prev) => ({ ...prev, price: e.target.value }))
                 }
-              />
+                />
+            )
+          } 
+            
+            
              </div>
 
             <div className="flex flex-col">
               <input
                 className="border-2 rounded-lg p-2 w-full"
-                type="url"
+                type="text"
                 placeholder="Form Link"
                 value={currentEvent.formLink}
                 onChange={(e) =>
-                  setCurrentEvent({ currentEvent, formLink: e.target.value })
+                  setCurrentEvent((prev) => ({ ...prev, formLink: e.target.value }))
                 }
               />
             </div>
 
-            
+            {/* this is where we input the image  */}
             <div className="flex flex-col">
               <input
                 className="border-2 rounded-lg p-2 w-full"
                 type="file"
+                onChange={(e)=> {
+                  setImageUpload(e.target.files[0])
+                }}
               />
             </div>
 

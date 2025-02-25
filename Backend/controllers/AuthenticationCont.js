@@ -8,10 +8,12 @@ import { AddUser } from '../models/adminModel.js';
 // }
 export const AuthController = {
     LoginAdmin : async (req , res) =>  {
-        const {email } = req.body ;
+        console.log(req.body , "this is the data , is it going");
+        const {email} = req.body ;
         const data = FindUser(email) 
         // this is were I find some data of the user 
         if(data) {
+            console.log(data,"there exists")
             var token = jwt.sign({email : email }, process.env.SECRET_KEY);
             // the password checking should be done by a iddleware
             
@@ -37,16 +39,15 @@ export const AuthController = {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err , hash) {
                 // Store hash in your password DB.
-                const userData = AddUser(name , email , college , password = hash )
+                const userAdded = AddUser(name , email , college , hash )
                 // logging the user that will be created 
-                if(userData) {
+                if(userAdded) {
                     res.status(200).json({
                         status : "success" ,
-                        message : "User has been authenticated" ,
-                        token 
+                        message : "The Account has been created succssfully" , 
                     })
                 }
-                console.log(userData) ; 
+                console.log(userAdded) ; 
             });
         });
     

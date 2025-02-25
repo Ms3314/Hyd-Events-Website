@@ -1,41 +1,18 @@
-// import express from "express"
-// import adminRouter from "./routes/admin.js";
-// import mongoose from "mongoose";
-// import cookieParser from "cookie-parser";
-// const app = express()
-
-// mongoose.connect('mongodb://127.0.0.1:27017/test')
-//   .then(() => console.log('Connected! to the database'));
-
-  
-// app.use(cookieParser())
-// app.use(express.json());
-
-// app.use("/api/v1/user")
-// app.use("/api/v1/admin" , adminRouter)
-
-
-// app.listen(3000 , ()=>{
-//     console.log("connected at port 3000");
-// })
 
 import express from "express";
 import adminRouter from "./routes/admin.js";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import cors from 'cors'
 // import ImageDetails from "./ImageDetails.js";
 import multer from 'multer'
+
 
 
 
 const app = express();
 
 
-// MongoDB connection
-mongoose.connect('mongodb://127.0.0.1:27017/test')
-  .then(() => console.log('Connected to the database'))
-  .catch((err) => console.error('Error connecting to the database:', err));
-
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
