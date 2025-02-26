@@ -15,16 +15,16 @@ const Login = () => {
         if (loginData.password == '') {
             return ;
         }
-        console.log("The form has been submitted")
+        // console.log("The form has been submitted")
         const payload = await axios.post("http://localhost:3000/api/v1/admin/signin" , loginData);
-        console.log(payload , "what is the payload")
+        // console.log(payload , "what is the payload")
         if (payload.status == 200) {
             const token = payload.data.token;
             localStorage.setItem("token",token);
             window.location.reload();
         } else {
             alert("No data available")
-            console.log(payload.data.message)
+            // console.log(payload.data.message)
         }
     }
   return (
@@ -43,7 +43,8 @@ const Login = () => {
             </div>
             <div className='flex justify-center items-center m-2 w-48 h-10 bg-white rounded-lg'>
                 <input className=' outline-none rounded-lg p-1' type='password' placeholder='Password'
-                    onChange={(e)=>
+                  
+                  onChange={(e)=>
                         setLoginData((prev)=>({ ...prev , password : e.target.value})
                     )} 
                 />

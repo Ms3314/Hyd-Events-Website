@@ -25,7 +25,7 @@ export async function FindUser (email) {
                 email
             }
         })  
-        console.log(res , "this is the user with the unique email")
+        // console.log(res , "this is the user with the unique email")
         return res ; 
 }
 // the organisation will be an array over here 

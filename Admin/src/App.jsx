@@ -6,12 +6,14 @@ import {
   Route,
   Routes,
   BrowserRouter,
+  Await,
 } from "react-router-dom";
 import Homepg from './Components/Pages/Homepg';
 import Layout from './Layout';
 import AddEvents from './Components/AddEvents/AddEvents';
 import EditEvent from './Components/Pages/EditEvent';
 import Settingpg from './Components/Pages/Settingpg';
+import axios from 'axios';
 
 
 const Content = 
@@ -31,7 +33,27 @@ export const MyDetail = createContext()
 function App() {
   const token = localStorage.getItem("token")
   const [content, setContent] = useState(Content)
-  if (!token) {
+  const [valid , setValid] = useState(false);
+  const isTokenValid = async () => {
+    if (!token) return false ;
+    console.log("this is the toekn from frontend " , token)
+    const payload = await axios.post("http://localhost:3000/api/v1/admin/checkToken" , {token} , {
+      headers : {
+        "Authorization" : `Bearer ${token}`,
+        "Content-Type" : "application/json"
+      }
+    } )
+    return payload.data.isValid ;
+  }
+  useEffect( ()=>{
+    async function checkToken() {
+    const t = await isTokenValid()
+    console.log("t" , 'what is it')
+    setValid(t)
+    }
+    checkToken();
+  },[])
+  if (!valid) {
     return (
     <BrowserRouter>
         <Routes>
@@ -43,7 +65,7 @@ function App() {
      </BrowserRouter>
   )
   }
-  if (token) {
+  if (valid) {
   return (
     <MyDetail.Provider value={{content,setContent}}>
      <BrowserRouter>

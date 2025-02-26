@@ -1,6 +1,8 @@
 // need to make a middleware that checks if the user exists and also exists and verifies the password of this thing 
 import bcrypt from "bcryptjs"
 import { FindUser } from "../models/adminModel.js";
+import jwt from 'jsonwebtoken';
+
 // just checking like the user exists and the password 
 
 export async function CheckEmailPass(req , res , next) {
@@ -35,28 +37,38 @@ export async function CheckEmailPass(req , res , next) {
 }
 
 export function CheckTokenExist(req , res , next ) {
-    // what this function expects is just your token 
-    const {token} = req.body ;
-    jwt.verify(token, process.env.SECRET_KEY , function(err, decoded) {
-        // console.log(decoded.user) // bar
-        try {
-            const user = FindUser(decoded.email) ;
-            if(user) {
-                res.userid = user.id ; 
-                next()  
-            }else {
-                res.status(500).json({
-                    status : "error" ,
-                    message : "Invalid credentials here" ,
-                    err ,
-                })
-            }
-        } catch (error) {
-            res.status(500).json({
+        const authHeader = req.headers.authorization;
+        let token = null ;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        } 
+        if (!token) {
+            res.status(401).json({
                 status : "error" ,
-                message : "Something went wrong " ,
-                error 
+                message : "the token does not exist"
             })
         }
-      });
+        // console.log("this is the token" , token)
+        jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
+            // console.log(decoded.user) // bar
+            try {
+                const user = await FindUser(decoded.email) ;
+                if(user) {
+                    req.userid = user.id ; 
+                    next();
+                }else {
+                    res.status(500).json({
+                        status : "error" ,
+                        message : "Invalid credentials here" ,
+                        err ,
+                    })
+                }
+            } catch (error) {
+                res.status(500).json({
+                    status : "error" ,
+                    message : "Something went wrong " ,
+                    error 
+                })
+            }
+          });
 }
