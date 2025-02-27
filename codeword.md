@@ -1,0 +1,1 @@
+AZ1 -> this means that the user does not exist 

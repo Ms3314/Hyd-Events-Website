@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function AddUser(name , email , college ,password ) {
+
     try {
         const res = await prisma.organization.create({
             data : {
@@ -46,10 +47,12 @@ export async function DoesUserWithIdExist(orgid) {
         return res ; 
     } catch (error) {
         throw new Error(error.message || "An error occured While finding the user")
+
     }
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
+
 export async function AddEvent(
     title, description, event_date, price, registration_link, 
     organisation, event_image, time, venue
@@ -174,7 +177,6 @@ export async function FindAndDeleteEventsOfAdmin(orgid, eventid) {
         throw new Error(error.message || "An error occurred while deleting the event");
     }
 }
-
 
 
 // few things we have to do 
