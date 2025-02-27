@@ -5,6 +5,7 @@ import { useNavigate , useParams } from "react-router-dom"
 
 
 const EventsDetailpage = () => {
+  const {id} = useParams();
   const { data, setData } = useContext(MyContext)
   console.log(data, "This is the data")
   const detail = data
@@ -14,8 +15,13 @@ const EventsDetailpage = () => {
   let navigate = useNavigate();
   
   useEffect(()=>{
-    const {id} = useParams();
-    axios.post()
+    console.log(id ,"this is the id")    
+    const FindEventDetails = async () => {
+      const data = await axios.post(`http://localhost:3000/api/v1/user/event/${id}`)
+      console.log(data)
+      setData(FindEventDetails.data.events)
+    } 
+    FindEventDetails();
   },[])
 
   function ClubDetailPage(data) {

@@ -20,9 +20,10 @@ export const UserController  = {
         });
     }   
     },
-    AnEvent : async (req ,res) => {
+    FindEvent : async (req ,res) => {
         try {
             const eventid = req.params.eventid
+            console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
             res.status(200).json({
                 success: true,
