@@ -37,17 +37,20 @@ export async function CheckEmailPass(req , res , next) {
 }
 
 export function CheckTokenExist(req , res , next ) {
-        const authHeader = req.headers.authorization;
+    const authHeader = req.headers.authorization;
+    console.log("did the delete thing reach here" , authHeader)
         let token = null ;
         if (authHeader && authHeader.startsWith("Bearer ")) {
             token = authHeader.split(" ")[1];
         } 
+        
         if (!token) {
             res.status(401).json({
                 status : "error" ,
                 message : "the token does not exist"
             })
         }
+        console.log(token , "does this thing exist")
         // console.log("this is the token" , token)
         jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
             // console.log(decoded.user) // bar

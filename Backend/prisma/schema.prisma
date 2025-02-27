@@ -29,6 +29,8 @@ model Event {
   id            Int     @id @default(autoincrement())
   title         String
   Description   String
+  time          String
+  venue         String
   event_date    DateTime // works seamlessly with Date.now()
   price         Int @default(0)
   registration_link     String  
