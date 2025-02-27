@@ -15,8 +15,7 @@ export const AuthController = {
             var token = jwt.sign({email : email }, process.env.SECRET_KEY);
             // the password checking should be done by a iddleware
             
-            // token key is generated if the user exist
-            
+
             res.status(200).json({
                 status : "success" , 
                 message : "you have succesfully logged in" ,
@@ -37,16 +36,16 @@ export const AuthController = {
         bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(password, salt, function(err , hash) {
                 // Store hash in your password DB.
-                const userData = AddUser(name , email , college , hash )
+                const userAdded = AddUser(name , email , college , hash )
                 // logging the user that will be created 
-                var token = jwt.sign({email : email }, process.env.SECRET_KEY);
-                if(userData) {
+                if(userAdded) {
                     res.status(200).json({
                         status : "success" ,
-                        message : "User has been authenticated" ,
-                        token 
+                        message : "The Account has been created succssfully" , 
                     })
                 }
+                console.log(userAdded) ; 
+
             });
         });
     

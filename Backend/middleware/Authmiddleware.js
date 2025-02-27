@@ -15,7 +15,6 @@ export async function CheckEmailPass(req , res , next) {
             }
             else {
                 res.status(500).json({
-                    err , 
                     status : "error" , 
                     message : "Credentials error"
                 })
@@ -30,36 +29,42 @@ export async function CheckEmailPass(req , res , next) {
     }
 }
 
-export async function CheckTokenExist(req , res , next ) {
-    // what this function expects is just your token 
-    const {token} = req.body ;
-    if(!token) {
-        res.status(500).json({
-            status : "error" ,
-            message : "You are not verified to access this route" ,
-        })
-    }
-        // console.log(decoded.user) // bar
-        try {    
-                jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
-                    const user = await FindUser(decoded.email) ;
-                    if(user) {
-                        req.userid = user.id ; 
-                        next()  
-                    }else {
-                        res.status(500).json({
-                            status : "error" ,
-                            message : "Invalid credentials here" ,
-                            err ,
-                        })
-                    }     
-            })
-        } catch (error) {
-            res.status(500).json({
+export function CheckTokenExist(req , res , next ) {
+    const authHeader = req.headers.authorization;
+    console.log("did the delete thing reach here" , authHeader)
+        let token = null ;
+        if (authHeader && authHeader.startsWith("Bearer ")) {
+            token = authHeader.split(" ")[1];
+        } 
+        
+        if (!token) {
+            res.status(401).json({
                 status : "error" ,
-                message : "You are not verified to access this route" ,
-                error ,
+                message : "the token does not exist"
             })
         }
-      ;
+        console.log(token , "does this thing exist")
+        // console.log("this is the token" , token)
+        jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
+            // console.log(decoded.user) // bar
+            try {
+                const user = await FindUser(decoded.email) ;
+                if(user) {
+                    req.userid = user.id ; 
+                    next();
+                }else {
+                    res.status(500).json({
+                        status : "error" ,
+                        message : "Invalid credentials here" ,
+                        err ,
+                    })
+                }
+            } catch (error) {
+                res.status(500).json({
+                    status : "error" ,
+                    message : "Something went wrong " ,
+                    error 
+                })
+            }
+          });
 }

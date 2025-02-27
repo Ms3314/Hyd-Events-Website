@@ -1,9 +1,9 @@
 import express from 'express';
-import { UserController } from '../controllers/UserControllers';
-const UserRouter = express.Router();
+import {UserController}  from '../controllers/userController.js';
+const userRouter = express.Router();
 
-UserRouter.route('/event').get(UserController.DisplayAllEvents)
-UserRouter.route('/eventbyorg').get(UserController.DisplayEventByOrg)
-UserRouter.route('/org').get(UserController.DisplayOrganizationDetail)
+userRouter.route("/events").get(UserController.AllEvents)
+userRouter.route("/event/:eventid").get(UserController.FindEvent)
 
-export default UserRouter ; 
+export default userRouter
+

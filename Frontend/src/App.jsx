@@ -53,7 +53,7 @@ const [data , setData] = useState(Data)
           < Route index element={<HomePage />} />
           < Route path='/about' element={<About />} />
           < Route path='/events' element={<EventPage />} />
-          < Route path='/evntdetails' element={<EventsDetailpage />} />
+          < Route path='/evntdetails/:id' element={<EventsDetailpage />} />
           < Route path='/societydetails' element={<SocietyPg/>} />
       </Route>
     </Routes>

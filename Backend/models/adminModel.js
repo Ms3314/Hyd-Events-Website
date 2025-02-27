@@ -2,15 +2,22 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function AddUser(name , email , college ,password ) {
-    const res = await prisma.organization.create({
-        data : {
-            name ,
-            email ,
-            password ,
-            college ,
-        }
-    })
-    return res ; 
+
+    try {
+        const res = await prisma.organization.create({
+            data : {
+                name ,
+                email ,
+                password ,
+                college ,
+            }
+        })
+        console.log(res , "the data we send");
+        return res ;  
+    } catch (error) {
+        return error;
+    }
+    
 }
 
 export async function FindUser (email) {
@@ -19,38 +26,66 @@ export async function FindUser (email) {
             where : {
                 email
             }
-        })
-        return res ;
+        })  
+        // console.log(res , "this is the user with the unique email")
+        return res ; 
     } catch (error) {
-        throw new Error(error.message || "Error while finding the user")
+        throw new Error(error.message || "An error occured While finding the user")
+    }
+        
+}
+
+export async function DoesUserWithIdExist(orgid) {
+    console.log("the id for the org is" , orgid)
+    try {
+        const res = await prisma.organization.findUnique({
+            where : {
+                id : Number(orgid)
+            }
+        })  
+        // console.log(res , "this is the user with the unique email")
+        return res ; 
+    } catch (error) {
+        throw new Error(error.message || "An error occured While finding the user")
+
     }
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
-export async function AddEvent (formLink , title , description , eventDate , price , registrationLink , organisation , eventImage ) {
-        await prisma.event.create({
-            data : {
-                title ,
-                description ,
-                eventDate , 
-                price ,
-                registrationLink ,
-                formLink , 
-                // so like we are connecting the event with an organisation
-                organization : {
-                    connect :  {id : organisation} // connect to the organisation using ID 
-                },
-                eventImage , 
+
+export async function AddEvent(
+    title, description, event_date, price, registration_link, 
+    organisation, event_image, time, venue
+) {
+    console.log("The event adding function is working");
+    console.log( event_date , "time"  )
+    try {
+        const res = await prisma.event.create({
+            data: {
+                title,
+                Description: description,  // Fix field name (Prisma is case-sensitive!)
+                event_date: new Date(event_date), // Ensure correct date format
+                price : Number(price),
+                registration_link,
+                event_image,
+                time: time,  // Ensure it's a DateTime format
+                venue,
+                organisation: {
+                    connect: [{ id: organisation }]  // ✅ Correct Many-to-Many syntax
+                }
             }
-        }).then((data)=> {
-            return data ; 
-        }
-        ).catch((err)=>{
-            throw new Error(error.message || "An Error have been occured when adding data", err)
-        })
+        });
+
+        console.log("Event added successfully:", res);
+        return res;
+    } catch (error) {
+        console.error("Error adding event:", error);  // Log the actual error
+        throw new Error("Failed to add event");  // ✅ Throw an error instead of returning one
+    }
 }
 
-// this function check if the event exist when given the event id 
+
+
 
 export async function CheckEventExist (eventid) {
     try {
@@ -63,59 +98,85 @@ export async function CheckEventExist (eventid) {
             throw new Error("couldnt find the event with this id");
         }
     } catch (error) {
-        throw new Error(error.message || "Does this event Exist ?? ")
+        throw new Error(error.message || "An error occured while ediitng this event")
     }    
     
 
 }
 
-// findiing all 
-
-export async function DeleteEvent (organisation , eventid) {
-    await CheckEventExist(eventid)
-    try {
-        console.log(eventid , "Diddy get the evnt id")
-        const res = await prisma.event.delete({
-            where : {
-                id : eventid,  
-                organizationId : organisation , 
-            }
-        })
-        return res
-    } catch (error) {
-        throw new Error("An Error Occured while Deleting the Event")
-    }
-}
-
-// editing feature 
-// only takes which is rwequired only supposed to 
-export async function EditEvent (  eventid , updates) {
+// NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
+// edding feature 
+// basically ak se main pura kar de sakne isme i dont have to everything 
+export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image , time , venue  ) {
     // need to check if an existing event like this exist or not right 
         try {
             await CheckEventExist(eventid)
-            // Dynamically include only provided fields
-            const dataToUpdate = {};
-            if (updates.title) dataToUpdate.title = updates.title;
-            if (updates.description) dataToUpdate.description = updates.description;
-            if (updates.eventDate) dataToUpdate.eventDate = updates.eventDate;
-            if (updates.price !== undefined) dataToUpdate.price = updates.price;
-            if (updates.registrationLink) dataToUpdate.registrationLink = updates.registrationLink;
-            if (updates.organisation) dataToUpdate.organisation = { connect: { id: updates.organisation } };
-            if (updates.eventImage) dataToUpdate.eventImage = updates.eventImage;
-            if (updates.formLink) dataToUpdate.formLink = updates.formLink 
-    // Update the event
-            const updatedEvent = await prisma.event.update({
-                where: { id: eventid },
-                data: dataToUpdate,
-            });
-            return updatedEvent
+            await prisma.event.update({
+                where : {
+                    id : eventid,
+                    organisation : {
+                        some : {id : organisation}
+                    }
+                } , 
+                data : {
+                    title ,
+                    description ,
+                    event_date , 
+                    price ,
+                    registration_link ,
+                    organisation ,
+                    event_image 
+                }
+            
+        }) 
         } catch (error) {
             throw new Error(error.message || "An error occured while editing the event")
         }
             
+       
 }
 
 
+export async function FindEventsOfAdmin(org) {
+    try {
+        const ressponseOrg = (await prisma.event.findMany({
+            where : {
+                organisation : {
+                    some : { id : Number(org)}
+                }
+            }
+        }   
+    ))  
+        return ressponseOrg ;
+    } catch (error) {
+        throw new Error(error.message || "An error occured while editing the event")
+    }
+    
+}
+
+
+export async function FindAndDeleteEventsOfAdmin(orgid, eventid) {
+    try {
+        const foundEvent = await prisma.event.findFirst({
+            where: {
+                id: Number(eventid),
+                organisation: {
+                    some: { id: Number(orgid) }
+                }
+            }
+        });
+
+        if (!foundEvent) return false; // Event does not belong to the org
+
+        await prisma.event.delete({
+            where: { id: Number(eventid) }
+        });
+
+        return true;
+    } catch (error) {
+        throw new Error(error.message || "An error occurred while deleting the event");
+    }
+}
 
 
 // few things we have to do 

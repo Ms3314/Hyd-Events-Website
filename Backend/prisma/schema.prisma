@@ -14,32 +14,32 @@ datasource db {
 }
 
 model Organization {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String
-  college   String
-  orgPic    String?
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  password String 
+  name  String  
+  college String 
+  orgPic String? 
   orgBanner String?
-  socials   String[] // Keeping consistent camelCase
-  events    Event[]  // One-to-many relationship
+  Socials String[] 
+  events Event[] @relation("OrganizationToEvent") 
 }
-
+// this is now a many to many relation over here 
 model Event {
-  id                 Int           @id @default(autoincrement())
-  title              String
-  description        String
-  eventDate          DateTime
-  price              Int           @default(0)
-  registrationLink   String
-  formLink           String        @default("")
-  views              Int?
-  formClicks         Int?
-  eventImage         String?             
-  organizationId     Int           // Foreign key
-  organization       Organization  @relation(fields: [organizationId], references: [id])
+  id            Int     @id @default(autoincrement())
+  title         String
+  Description   String
+  time          String
+  venue         String
+  event_date    DateTime // works seamlessly with Date.now()
+  price         Int @default(0)
+  registration_link     String  
+  views          Int?
+  form_clicks    Int? 
+  event_image     String?
+  organisation  Organization[] @relation("OrganizationToEvent") 
+  // basically it takes the realtion to to the Organisation ke id 
 }
-
 
 
 
