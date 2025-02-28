@@ -16,7 +16,15 @@ export async function GiveOneEvents(eventid) {
     try {
         const events = await prisma.event.findUnique({
             where : {
-                id : eventid
+                id : Number(eventid)
+            },
+            include : {
+                organisation : {
+                    select : {
+                        id : true ,
+                        name : true ,
+                    }
+                }
             }
         }) ;
         return events ;

@@ -1,5 +1,4 @@
 import React, { useContext,useState } from 'react'
-import { MyContext } from '../../App'
 import Cards from '../Cards/Cards'
 import Button from '../Cards/Button'
 

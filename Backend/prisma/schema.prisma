@@ -33,6 +33,8 @@ model Event {
   venue         String
   event_date    DateTime // works seamlessly with Date.now()
   price         Int @default(0)
+  size          Int @default(1)
+  Deadline      DateTime @default(now())
   registration_link     String  
   views          Int?
   form_clicks    Int? 

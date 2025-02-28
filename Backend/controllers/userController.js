@@ -25,6 +25,7 @@ export const UserController  = {
             const eventid = req.params.eventid
             console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
+            console.log("this is the details of the specific event" , events)
             res.status(200).json({
                 success: true,
                 message: "Events retrieved successfully",
