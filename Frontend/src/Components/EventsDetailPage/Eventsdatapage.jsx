@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 
 const Eventsdatapage = () => {
   const {id} = useParams();
+  const [isLoading , setLoading] = useState(false);
   const [data , setData] = useState();
   const [date , setDate] = useState();
   const [month , setMonth] = useState();
-  function SetEverything () {
-    const eventDate = new Date(data?.event_date)
+  function SetEverything (evdate) {
+    const eventDate = new Date(evdate)
     setDate(eventDate.getDate());
     setMonth(eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3));
 }
@@ -18,20 +19,28 @@ const Eventsdatapage = () => {
   useEffect(()=>{
     console.log(id ,"this is the id")    
     const FindEventdatas = async () => {
+      setLoading(true)
       const events = await axios.get(`http://localhost:3000/api/v1/user/event/${id}`)
       console.log(events , "these are the thing")
       console.log( "the events are these" , events.data.events)
       setData(events.data.events)
+      SetEverything(events.data.events.event_date);
+      setLoading(false)
     } 
     FindEventdatas();
-    SetEverything();
   },[])
 
   function ClubdataPage(data) {
     setData(data)
     navigate("/societydatas");
   }
-  
+  if(isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center text-2xl "> 
+      <p>Loading...</p>
+      </div>
+    )
+  }
   return (
     <div className="bg-gray-100 min-h-screen pb-10">
       {/* Hero Banner */}

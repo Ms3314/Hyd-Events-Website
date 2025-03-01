@@ -68,18 +68,16 @@ const Cards = () => {
 
 const Cardcomponent = ({item}) => {
     let navigate = useNavigate();
-    const { setData} = useContext(MyContext)
     console.log("is this a date" , item.fee)
     const eventDate = new Date(item.event_date)
     const date = eventDate.getDate();
     const month = eventDate.toLocaleString("en-US" , {month : "long"}).slice(0,3);
+    console.log(month , date , "this might be the month and date")
     function SpecificEventPage  (item)  {
         // here i got the data of the card
-        setData(item)
         navigate(`/evntdetails/${item.id}`);
     }   
     function ClubDetailPage (item){
-        setData(item)
         navigate("/societydetails");
     }
     
@@ -94,7 +92,7 @@ const Cardcomponent = ({item}) => {
         <div className="p-4">
             <div className="flex justify-evenly items-start">
                 <div className="text-sm font-bold text-gray-700 uppercase">{month}
-                  <div className='text-primary text-lg-center'>{date}</div>
+                <div className='text-primary text-lg-center'>{date}</div>
             </div>
             <div className="text-lg text-gray-600">{item.title} 
               <div className="text-sm text-gray-600">{item.venue}</div>

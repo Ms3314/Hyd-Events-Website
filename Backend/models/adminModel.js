@@ -35,6 +35,22 @@ export async function FindUser (email) {
         
 }
 
+export async function FindUserById (userid) {
+    try {
+        const res = await prisma.organization.findUnique({
+            where : {
+                id : userid
+            }
+        })  
+        // console.log(res , "this is the user with the unique email")
+        return res ; 
+    } catch (error) {
+        throw new Error(error.message || "An error occured While finding the user")
+    }
+        
+}
+
+
 export async function DoesUserWithIdExist(orgid) {
     console.log("the id for the org is" , orgid)
     try {
@@ -52,6 +68,27 @@ export async function DoesUserWithIdExist(orgid) {
 }
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
+
+export async function UpdateUserById (userid, name, college, email, about, orgBanner,  orgPic ) {
+    try {
+        const res = await prisma.organization.update({
+            where : {
+                id : Number(userid) 
+            } ,
+            data : {
+                name ,
+                email ,
+                college ,
+                about ,
+                orgBanner ,
+                orgPic
+            }
+        })
+        return res ;
+    } catch (error) {
+        throw new Error(error.message || "An error occured while Updating user details")
+    }
+}
 
 export async function AddEvent(
     title, description, event_date, price, registration_link, 
