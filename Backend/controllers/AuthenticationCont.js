@@ -8,16 +8,14 @@ import { AddUser } from '../models/adminModel.js';
 // }
 export const AuthController = {
     LoginAdmin : async (req , res) =>  {
-        console.log(req.body , "this is the data , is it going");
-        const {email} = req.body ;
+        const {email } = req.body ;
         const data = await FindUser(email) 
         // this is were I find some data of the user 
         if(data) {
-            console.log(data,"there exists")
             var token = jwt.sign({email : email }, process.env.SECRET_KEY);
             // the password checking should be done by a iddleware
             
-            // token key is generated if the user exist
+
             res.status(200).json({
                 status : "success" , 
                 message : "you have succesfully logged in" ,
@@ -47,6 +45,7 @@ export const AuthController = {
                     })
                 }
                 console.log(userAdded) ; 
+
             });
         });
     
