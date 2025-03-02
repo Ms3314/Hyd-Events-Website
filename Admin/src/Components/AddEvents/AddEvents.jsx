@@ -253,6 +253,7 @@ const AddEvents = () => {
 
             {/* this is where we input the event_image  */}
             <div className="flex flex-row gap-4">
+              <label htmlFor="">Upload your poster / Event display Image</label>
               <input
                 className="border-2 rounded-lg p-2 w-full"
                 type="file"

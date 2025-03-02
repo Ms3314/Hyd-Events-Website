@@ -31,6 +31,8 @@ export const orgController = {
             orgBanner,
             orgPic 
             } = req.body;
+            console.log(req.body , "Why am i not able to see it even thoough i sen it ")
+            console.log(orgPic , orgBanner , "the updated images")
             const userOrg = await UpdateUserById( userid, name,
             college,
             email,
@@ -38,7 +40,7 @@ export const orgController = {
             orgBanner,
             orgPic
             )
-
+            console.log(userOrg , "The response")
             if(userOrg) {
                 res.status(200).json({
                     status: "success",

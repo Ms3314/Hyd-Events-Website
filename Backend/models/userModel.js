@@ -28,6 +28,15 @@ export async function GiveOrgWithEvents(orgid) {
     }
 }
 
+export async function GiveAllOrgs () {
+    try {
+        const orgs = await prisma.organization.findMany() ;
+        return orgs ;
+    } catch (error) {
+        throw new Error(error.message || "Something went wrong while trying to get the Organizations")
+    }
+}
+
 export async function GiveOneEvents(eventid) {
     try {
         const events = await prisma.event.findUnique({

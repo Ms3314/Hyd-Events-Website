@@ -50,7 +50,7 @@ const Cards = () => {
     return (
       <>
     
-            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 justify-center gap-6 m-8 p-8 md:px-12 md:py-8 lg:mx-60 lg:my-16 lg:px-40'>
+            <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-6 m-8 p-8 '>
               {eventData.map((item , id) => (
                   <Cardcomponent  item={item} key={id} />
               ))}
@@ -82,8 +82,7 @@ const Cardcomponent = ({item}) => {
     }
     
     return (
-     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col 
-                     hover:border-2 border-r-secondary border-t-primary border-l-secondary border-b-secondary">
+     <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col  hover:border-2 border-r-secondary border-t-primary border-l-secondary border-b-secondary">
       
         <div className="h-64 relative">
                 <img src={item.event_image} alt={item.title} className="w-full h-full object-contain" />

@@ -32,6 +32,8 @@ const Navbar = () => {
     const [open ,setOpen] = React.useState(false)
     const navigate = useNavigate()
     const handleLogout = () => {
+      localStorage.removeItem("events")
+      localStorage.removeItem("events_lastFetched")
       localStorage.removeItem("token");
       navigate("/");
       window.location.reload();

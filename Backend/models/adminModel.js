@@ -86,6 +86,7 @@ export async function UpdateUserById (userid, name, college, email, about, orgBa
         })
         return res ;
     } catch (error) {
+        console.log(error)
         throw new Error(error.message || "An error occured while Updating user details")
     }
 }

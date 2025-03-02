@@ -1,4 +1,4 @@
-import { GiveAllEvents, GiveOneEvents, GiveOrgWithEvents } from "../models/userModel.js";
+import { GiveAllEvents, GiveAllOrgs, GiveOneEvents, GiveOrgWithEvents } from "../models/userModel.js";
 
 // Controller function to get all events
 export const UserController  = {
@@ -26,6 +26,24 @@ export const UserController  = {
                     error: error.message,
             })
         }
+    },
+    AllOrgs : async (req , res) => {
+        try {
+            // Fetch all events from the database using Prisma
+            const Allorgs = await GiveAllOrgs()
+            // Return success response with events data
+            return res.status(200).json({
+            success: true,
+            message: "Organizationd retrieved successfully",
+            Allorgs,
+            });
+        } catch (error) {
+            return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve Organizations",
+            error: error.message,
+            });
+        }   
     },
     AllEvents : async (req , res) => {
     try {
