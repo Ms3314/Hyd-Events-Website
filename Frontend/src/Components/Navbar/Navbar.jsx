@@ -20,16 +20,6 @@ const NavbarMenu = [
       title:"About",
       link:"/about",
     },
-    {
-      id:4,
-      title:"Registered",
-      link:"#",
-    },
-    {
-      id:5,
-      title:"Contact",
-      link:"#",
-    },
   ];
 const Navbar = () => {
     const [open ,setOpen] = React.useState(false)

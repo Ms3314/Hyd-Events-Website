@@ -1,2 +1,3 @@
-# Hyd-Events-Website
-A events publishing and Management website made by the students of MJCET
+## HYD Events Platform 
+
+A cool intiiative to make a platform for find events that are goin on in the college 

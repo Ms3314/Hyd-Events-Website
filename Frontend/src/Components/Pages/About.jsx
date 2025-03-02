@@ -6,29 +6,20 @@ const About = () => {
   const Information =[
  {
     id:1,
-    name:"Dev1",
+    name:"Samiuddin",
     proffesion:"CSE",
-    position:"head",
-    portfolio:"lorem  jsbgaslcbacjb yscjsacga cfdgdddgsfg gdlafs gsyao a;sod sd ishda phcsi uhscjsdwo",
-    Linkdn:""
 
   },
   {
     id:2,
-    name:"Dev1",
+    name:"Iqra",
     proffesion:"CSE",
-    position:"head",
-    portfolio:"lorem gdlafs gsyao a;sod sd ishda phcsi uhscjsdwo",
-    Linkdn:""
 
   },
   {
     id:3,
-    name:"Dev1",
-    proffesion:"CSE",
-    position:"head",
-    portfolio:"lorem gdlafs gsyao a;sod sd ishda phcsi uhscjsdwo",
-    Linkdn:""
+    name:"Shafi",
+    proffesion:"CSE"
 
   },
 ]

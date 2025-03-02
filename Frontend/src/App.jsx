@@ -11,6 +11,7 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import SocietyPg from './Components/SocietyPg/SocietyPg.jsx'
+import NotFound from './Components/Pages/404.jsx'
 
 
 
@@ -24,6 +25,7 @@ function App() {
           < Route path='/events' element={<EventPage />} />
           < Route path='/evntdetails/:id' element={<Eventsdatapage />} />
           < Route path='/societydetails/:orgid' element={<SocietyPg/>} />
+          < Route path='/*' element={<NotFound/>} />
       </Route>
     </Routes>
   </BrowserRouter>
