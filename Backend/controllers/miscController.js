@@ -8,5 +8,6 @@ export const miscController = {
                 message : "the data is valid"
             }) 
         }
-}
+    },
+    
 }

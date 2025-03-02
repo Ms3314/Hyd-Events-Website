@@ -1,70 +1,83 @@
 import axios from "axios"
-import { MyContext } from "../../App"
-import { useContext, useEffect } from "react"
 import { useNavigate , useParams } from "react-router-dom"
+import { useEffect, useState } from "react";
 
 
-const EventsDetailpage = () => {
+const Eventsdatapage = () => {
   const {id} = useParams();
-  const { data, setData } = useContext(MyContext)
-  console.log(data, "This is the data")
-  const detail = data
-  const eventDate = new Date(detail.event_date)
-  const date = eventDate.getDate();
-  const month = eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3);
+  const [isLoading , setLoading] = useState(false);
+  const [data , setData] = useState();
+  const [date , setDate] = useState();
+  const [month , setMonth] = useState();
+  function SetMonthAndDate (evdate) {
+    const eventDate = new Date(evdate)
+    setDate(eventDate.getDate());
+    setMonth(eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3));
+}
   let navigate = useNavigate();
   
   useEffect(()=>{
     console.log(id ,"this is the id")    
-    const FindEventDetails = async () => {
-      const data = await axios.post(`http://localhost:3000/api/v1/user/event/${id}`)
-      console.log(data)
-      setData(FindEventDetails.data.events)
+    const FindEventdatas = async () => {
+      setLoading(true)
+      const events = await axios.get(`http://localhost:3000/api/v1/user/event/${id}`)
+      console.log(events , "these are the thing")
+      console.log( "the events are these" , events.data.events)
+      setData(events.data.events)
+      SetMonthAndDate(events.data.events.event_date);
+      setLoading(false)
     } 
-    FindEventDetails();
+    FindEventdatas();
   },[])
 
-  function ClubDetailPage(data) {
+  function ClubdataPage(data) {
     setData(data)
-    navigate("/societydetails");
+    const orgid = data.organisation[0].id
+    navigate(`/societydetails/${orgid}`);
   }
-  
+  if(isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center text-2xl "> 
+      <p>Loading...</p>
+      </div>
+    )
+  }
   return (
     <div className="bg-gray-100 min-h-screen pb-10">
       {/* Hero Banner */}
       <div className="relative h-64 sm:h-80 mb-20 w-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-b-lg shadow-lg overflow-hidden">
         <div className="absolute inset-0 opacity-30 bg-pattern-dots"></div>
         <div className="container mx-auto px-4 h-full flex items-end pb-6">
-          <h1 className="text-white text-3xl sm:text-4xl font-bold">{detail.EventName}</h1>
+          <h1 className="text-white text-3xl sm:text-4xl font-bold">{data?.name}</h1>
         </div>
       </div>
 
       {/* Main Content */}
       <div className="container mx-auto px-4 -mt-10">
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Left Column - Event Details */}
+          {/* Left Column - Event datas */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
               <div className="flex flex-col md:flex-row">
                 <div className="w-full md:w-1/3 mb-4 md:mb-0">
                   <div className="relative w-full h-48 rounded-lg overflow-hidden shadow-md">
                     <img 
-                      src={detail.event_image} 
-                      alt={detail.title}
+                      src={data?.event_image} 
+                      alt={data?.title}
                       className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
                 <div className="w-full md:w-2/3 md:pl-6">
-                  <h2 className="text-2xl font-bold text-gray-800">{detail.title}</h2> 
-                  <h3 className="text-lg text-gray-600 mb-4">{detail.EventType} by {detail.club}</h3>
+                  <h2 className="text-2xl font-bold text-gray-800">{data?.title}</h2> 
+                  <h3 className="text-lg text-gray-600 mb-4">{data?.EventType} by {data?.organisation[0].name} </h3>
                   
                   <div className="space-y-3">
                     <div className="flex items-center text-gray-700">
                       <svg className="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960" fill="currentColor">
                         <path d="M480-80q-106 0-173-33.5T240-200q0-24 14.5-44.5T295-280l63 59q-9 4-19.5 9T322-200q13 16 60 28t98 12q51 0 98.5-12t60.5-28q-7-8-18-13t-21-9l62-60q28 16 43 36.5t15 45.5q0 53-67 86.5T480-80Zm1-220q99-73 149-146.5T680-594q0-102-65-154t-135-52q-70 0-135 52t-65 154q0 67 49 139.5T481-300Zm-1 100Q339-304 269.5-402T200-594q0-71 25.5-124.5T291-808q40-36 90-54t99-18q49 0 99 18t90 54q40 36 65.5 89.5T760-594q0 94-69.5 192T480-200Zm0-320q33 0 56.5-23.5T560-600q0-33-23.5-56.5T480-680q-33 0-56.5 23.5T400-600q0 33 23.5 56.5T480-520Zm0-80Z"/>
                       </svg>
-                      <span>{detail.venue}</span>
+                      <span>{data?.venue}</span>
                     </div>
                     
                     <div className="flex items-center text-gray-700">
@@ -75,12 +88,12 @@ const EventsDetailpage = () => {
                     </div>
                     
                     <div className="flex items-center">
-                      <span className="text-gray-700">Conducted by</span>
+                      <span className="text-gray-700">Conducted by </span>
                       <button 
                         className="ml-2 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition duration-200"
-                        onClick={() => ClubDetailPage(data)}
+                        onClick={() => ClubdataPage(data)}
                       >
-                        {detail.club}
+                        {data?.organisation[0].name}
                       </button>
                     </div>
                   </div>
@@ -92,7 +105,7 @@ const EventsDetailpage = () => {
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-xl font-bold mb-4 text-gray-800">About This Event</h3>
               <div className="prose max-w-none text-gray-700">
-                {detail.Description}
+                {data?.Description}
               </div>
             </div>
           </div>
@@ -102,7 +115,7 @@ const EventsDetailpage = () => {
             <div className="bg-white rounded-lg shadow-lg p-6 sticky top-4">
               <div className="text-center mb-6">
                 <div className="text-3xl font-bold text-gray-800 mb-2">
-                  {detail.fee === undefined ? "Free Entry" : detail.fee}
+                  {data?.fee === undefined ? "Free Entry" : data?.fee}
                 </div>
                 <button 
                   className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition duration-200 shadow-md"
@@ -120,7 +133,7 @@ const EventsDetailpage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Registered</h4>
-                      <p className="text-gray-600">{detail.NoOfReg} participants</p>
+                      <p className="text-gray-600">{data?.NoOfReg} participants</p>
                     </div>
                   </div>
                   
@@ -130,7 +143,7 @@ const EventsDetailpage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Team Size</h4>
-                      <p className="text-gray-600">{detail.Teamsize}</p>
+                      <p className="text-gray-600">{data?.Teamsize}</p>
                     </div>
                   </div>
                   
@@ -140,7 +153,7 @@ const EventsDetailpage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Deadline</h4>
-                      <p className="text-gray-600">{detail.DeadLine}</p>
+                      <p className="text-gray-600">{data?.DeadLine}</p>
                     </div>
                   </div>
                 </div>
@@ -153,4 +166,4 @@ const EventsDetailpage = () => {
   )
 }
 
-export default EventsDetailpage
+export default Eventsdatapage

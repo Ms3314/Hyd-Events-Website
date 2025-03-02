@@ -1,8 +1,6 @@
-import React,{useContext ,createContext,useState, useEffect} from 'react'
-import img1 from '../../assets/img1.png'
-import pic2 from '../../assets/pic2.png'
+import {useState, useEffect} from 'react'
+
 import { useNavigate } from 'react-router-dom'
-import {MyDetail} from '../../App'
 import * as AlertDialog from "@radix-ui/react-alert-dialog";
 import '../Pages/style.css'
 import axios from 'axios'
@@ -133,6 +131,8 @@ const AlertComponent = ({eventdata , setEventData , setLoading}) => {
     setLoading(true);
     await deleteImage(eventdata.event_image)
     setEventData((prev)=> prev.filter(event => event.id != eventid))
+    localStorage.removeItem("events")
+    localStorage.removeItem("events_lastFetched")
     if (response.data.status) {
       toast.success("The Event has been Deleted")
       setLoading(false);

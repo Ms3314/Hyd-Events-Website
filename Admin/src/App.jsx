@@ -1,12 +1,10 @@
-import { useState ,createContext, useEffect } from 'react'
+import { useState , useEffect } from 'react'
 import Login from './Login-Register/Login/Login'
 import Register from './Login-Register/Register/Register'
-import img1 from './assets/img1.png'
 import {
   Route,
   Routes,
   BrowserRouter,
-  Await,
 } from "react-router-dom";
 import Homepg from './Components/Pages/Homepg';
 import Layout from './Layout';
@@ -16,71 +14,71 @@ import Settingpg from './Components/Pages/Settingpg';
 import axios from 'axios';
 
 
-const Content = 
-    {
-        id:1,
-        Venue:'MJCET hYderabad',
-        month:'oct',
-        Date:'23',
-        EventName:'Dev Expedation',
-        Timings:'1:00-2:00',
-        imgSrc:img1,
-        EventName:"HAck rev"
-    }
-export const MyDetail = createContext()
-
 
 function App() {
-  const token = localStorage.getItem("token")
-  const [content, setContent] = useState(Content)
-  const [valid , setValid] = useState(false);
+  const token = localStorage.getItem("token");
+  const [valid, setValid] = useState(false);
+  const [loading, setLoading] = useState(true); // Initialize loading to true
+  
   const isTokenValid = async () => {
-    if (!token) return false ;
-    console.log("this is the toekn from frontend " , token)
-    const payload = await axios.post("http://localhost:3000/api/v1/admin/checkToken" , {token} , {
-      headers : {
-        "Authorization" : `Bearer ${token}`,
-        "Content-Type" : "application/json"
-      }
-    } )
-    return payload.data.isValid ;
-  }
-  useEffect( ()=>{
+    if (!token) return false;
+  
+    console.log("Checking token:", token);
+  
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/admin/checkToken",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      
+      console.log("Token validation response:", response.data); // Debugging log
+      return response.data?.isValid ?? false; // Ensure a boolean response
+    } catch (error) {
+      console.error("Error verifying token:", error.response?.data || error.message);
+      return false;
+    }
+  };
+  
+
+  useEffect(() => {
     async function checkToken() {
-    const t = await isTokenValid()
-    console.log("t" , 'what is it')
-    setValid(t)
+      setLoading(true); // Ensure loading is true before making API call
+      const isValid = await isTokenValid();
+      setValid(isValid);
+      setLoading(false); // Set loading to false after checking
     }
     checkToken();
-  },[])
-  if (!valid) {
-    return (
-    <BrowserRouter>
-        <Routes>
-          <Route path='/'>
-              <Route path='/' element={<Login/>}/>
-              <Route path='/Register' element={<Register/>}/>
-          </Route>
-        </Routes>
-     </BrowserRouter>
-  )
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Prevents flashing errors while checking token
   }
-  if (valid) {
+
   return (
-    <MyDetail.Provider value={{content,setContent}}>
-     <BrowserRouter>
-        { <Routes>
-          <Route path='/' element={<Layout/>}>
-            <Route index element={<Homepg/>}/>
-            <Route path='/events' element={<AddEvents/>}/>
-            <Route path='/editevent' element={<EditEvent/>}/>
-            <Route path='/settings' element={<Settingpg/>}/>
+    <BrowserRouter>
+      <Routes>
+        {valid ? (
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Homepg />} />
+            <Route path="/events" element={<AddEvents />} />
+            <Route path="/editevent" element={<EditEvent />} />
+            <Route path="/settings" element={<Settingpg />} />
           </Route>
-        </Routes>}
-     </BrowserRouter>
-    </MyDetail.Provider>
-  )
-}
+        ) : (
+          <>
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </>
+        )}
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App

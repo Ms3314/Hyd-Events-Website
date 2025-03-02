@@ -1,7 +1,32 @@
-import { GiveAllEvents, GiveOneEvents } from "../models/userModel.js";
+import { GiveAllEvents, GiveOneEvents, GiveOrgWithEvents } from "../models/userModel.js";
 
 // Controller function to get all events
 export const UserController  = {
+    FindOrgWithEvents : async (req ,res) => {
+        try {
+            const {orgid} = req.params;
+            console.log("did we get the orgid" , orgid)
+            const orgsWithEvents = await GiveOrgWithEvents(orgid);
+            if (orgsWithEvents) {
+                return res.status(200).json({
+                    success: true,
+                    message: "Orgs and Events retrieved successfully",
+                    orgdata: orgsWithEvents,
+                })
+            } else {
+                return res.status(404).json({
+                    success : false ,
+                    message : "Couldnt find the organization"
+                })
+            }
+        } catch (error) {
+            return res.status(500).json({
+                    success: false,
+                    message: "Failed to retrieve Orgs and Events",
+                    error: error.message,
+            })
+        }
+    },
     AllEvents : async (req , res) => {
     try {
         // Fetch all events from the database using Prisma
@@ -25,6 +50,7 @@ export const UserController  = {
             const eventid = req.params.eventid
             console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
+            console.log("this is the details of the specific event" , events)
             res.status(200).json({
                 success: true,
                 message: "Events retrieved successfully",

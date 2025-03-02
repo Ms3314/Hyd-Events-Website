@@ -1,6 +1,7 @@
 import React from 'react'
 import ResponsiveMenu from './ResponsiveMenu'; 
 import hydEventsLogo from '../../assets/hydEventsLogo.png'; 
+import {  useNavigate } from 'react-router-dom'
 
 
 
@@ -29,8 +30,10 @@ const NavbarMenu = [
 
 const Navbar = () => {
     const [open ,setOpen] = React.useState(false)
+    const navigate = useNavigate()
     const handleLogout = () => {
       localStorage.removeItem("token");
+      navigate("/");
       window.location.reload();
     }
   return (

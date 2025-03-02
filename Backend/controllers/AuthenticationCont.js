@@ -16,14 +16,14 @@ export const AuthController = {
             // the password checking should be done by a iddleware
             
 
-            res.status(200).json({
+            return res.status(200).json({
                 status : "success" , 
                 message : "you have succesfully logged in" ,
                 token  ,
             })
         } 
         else {
-            res.status(404).json({
+            return res.status(404).json({
                 status : "user does not exist" , 
                 code : A21 ,
                 message : "the user already exists"

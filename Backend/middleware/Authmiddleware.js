@@ -30,6 +30,7 @@ export async function CheckEmailPass(req , res , next) {
 }
 
 export function CheckTokenExist(req , res , next ) {
+    console.log("the headers are : " , req.headers)
     const authHeader = req.headers.authorization;
     console.log("did the delete thing reach here" , authHeader)
         let token = null ;
@@ -37,8 +38,8 @@ export function CheckTokenExist(req , res , next ) {
             token = authHeader.split(" ")[1];
         } 
         
-        if (!token) {
-            res.status(401).json({
+        if (!token || token==null || token == undefined) {
+            return res.status(401).json({
                 status : "error" ,
                 message : "the token does not exist"
             })
@@ -53,14 +54,14 @@ export function CheckTokenExist(req , res , next ) {
                     req.userid = user.id ; 
                     next();
                 }else {
-                    res.status(500).json({
+                    return res.status(500).json({
                         status : "error" ,
                         message : "Invalid credentials here" ,
                         err ,
                     })
                 }
             } catch (error) {
-                res.status(500).json({
+                return res.status(500).json({
                     status : "error" ,
                     message : "Something went wrong " ,
                     error 
