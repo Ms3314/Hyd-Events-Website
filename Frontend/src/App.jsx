@@ -23,7 +23,7 @@ function App() {
           < Route path='/about' element={<About />} />
           < Route path='/events' element={<EventPage />} />
           < Route path='/evntdetails/:id' element={<Eventsdatapage />} />
-          < Route path='/societydetails' element={<SocietyPg/>} />
+          < Route path='/societydetails/:orgid' element={<SocietyPg/>} />
       </Route>
     </Routes>
   </BrowserRouter>

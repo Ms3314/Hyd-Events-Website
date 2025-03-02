@@ -9,7 +9,7 @@ const Eventsdatapage = () => {
   const [data , setData] = useState();
   const [date , setDate] = useState();
   const [month , setMonth] = useState();
-  function SetEverything (evdate) {
+  function SetMonthAndDate (evdate) {
     const eventDate = new Date(evdate)
     setDate(eventDate.getDate());
     setMonth(eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3));
@@ -24,7 +24,7 @@ const Eventsdatapage = () => {
       console.log(events , "these are the thing")
       console.log( "the events are these" , events.data.events)
       setData(events.data.events)
-      SetEverything(events.data.events.event_date);
+      SetMonthAndDate(events.data.events.event_date);
       setLoading(false)
     } 
     FindEventdatas();
@@ -32,7 +32,8 @@ const Eventsdatapage = () => {
 
   function ClubdataPage(data) {
     setData(data)
-    navigate("/societydatas");
+    const orgid = data.organisation[0].id
+    navigate(`/societydetails/${orgid}`);
   }
   if(isLoading) {
     return (

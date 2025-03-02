@@ -199,7 +199,7 @@ export async function FindAndDeleteEventsOfAdmin(orgid, eventid) {
                 id: Number(eventid),
                 organisation: {
                     some: { id: Number(orgid) }
-                }
+                }           
             }
         });
 
