@@ -14,7 +14,6 @@ export async function AllEvents() {
 //Preview events of an Org 
 export async function FindAllEventOfOrganization (organization) {
     try {
-        console.log("the organization you are getting here is " , organization)
         const res = await prisma.event.findMany({
             where : {
                 organizationId : organization  

@@ -19,7 +19,7 @@ const Settingpg = () => {
       });
 
       useEffect(()=>{
-          console.log("I am being called")
+          // console.log("I am being called")
           async function  getTheOrgDetail() {
             const response = await axios.get(`http://localhost:3000/api/v1/admin/org` ,  {
             headers : {
@@ -27,7 +27,7 @@ const Settingpg = () => {
               "Content-Type" : "application/json",
             }
             })
-            console.log(response.data.org)
+            // console.log(response.data.org)
             setCurrentSetting(response.data.org)
           }
           getTheOrgDetail();
@@ -41,27 +41,27 @@ const Settingpg = () => {
       
         // Upload Logo First
         if (logo) {
-          console.log("Uploading logo:", logo.name);
+          // console.log("Uploading logo:", logo.name);
           const event_logoref = ref(storage, `event_images/${logo.name + v4()}`);
           const logoSnapshot = await uploadBytes(event_logoref, logo);
           const logoUrl = await getDownloadURL(logoSnapshot.ref);
           
-          console.log("Logo uploaded successfully. URL:", logoUrl);
+          // console.log("Logo uploaded successfully. URL:", logoUrl);
           updatedSetting.orgPic = logoUrl;
         }
       
         // Upload Banner Next
         if (banner) {
-          console.log("Uploading banner:", banner.name);
+          // console.log("Uploading banner:", banner.name);
           const event_bannerref = ref(storage, `orgBanner/${banner.name + v4()}`);
           const bannerSnapshot = await uploadBytes(event_bannerref, banner);
           const bannerUrl = await getDownloadURL(bannerSnapshot.ref);
           
-          console.log("Banner uploaded successfully. URL:", bannerUrl);
+          // console.log("Banner uploaded successfully. URL:", bannerUrl);
           updatedSetting.orgBanner = bannerUrl;
         }
       
-        console.log("Final data being sent to backend:", updatedSetting);
+        // console.log("Final data being sent to backend:", updatedSetting);
       
         // Now send the updated data to the backend
         const response = await axios.put(`http://localhost:3000/api/v1/admin/org`, updatedSetting, {

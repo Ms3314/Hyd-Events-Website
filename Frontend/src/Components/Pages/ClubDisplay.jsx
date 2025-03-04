@@ -31,6 +31,20 @@ function SmallCard({data}) {
     const handleOrgDisplay = () => {
         navigate(`/societydetails/${data.id}`)
     }
+    if(!data.orgPic) {
+        const len = data.name.length
+        return (
+            <div className=' rounded-lg w-20 h-20 '>
+                <p
+                className={` border-2 rounded-2xl bg-red-100 font-semibold flex  flex-col ${len >= 5 ? "text-sm" : ""} 
+                items-center justify-center w-full h-full overflow-hidden break-words text-center p-1`}
+                onClick={handleOrgDisplay}
+                >
+                {data.name} 
+                </p>
+            </div>
+        )
+    }
     return (
         <div className='rounded-lg w-20 h-20'>
             <img src={data.orgPic} className='rounded-2xl bg-red-200 w-full h-full' alt={data.name} onClick={handleOrgDisplay}/>

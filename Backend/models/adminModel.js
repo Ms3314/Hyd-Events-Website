@@ -12,7 +12,7 @@ export async function AddUser(name , email , college ,password ) {
                 college ,
             }
         })
-        console.log(res , "the data we send");
+        // console.log(res , "the data we send");
         return res ;  
     } catch (error) {
         return error;
@@ -52,7 +52,7 @@ export async function FindUserById (userid) {
 
 
 export async function DoesUserWithIdExist(orgid) {
-    console.log("the id for the org is" , orgid)
+    // console.log("the id for the org is" , orgid)
     try {
         const res = await prisma.organization.findUnique({
             where : {
@@ -86,7 +86,7 @@ export async function UpdateUserById (userid, name, college, email, about, orgBa
         })
         return res ;
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         throw new Error(error.message || "An error occured while Updating user details")
     }
 }
@@ -95,8 +95,7 @@ export async function AddEvent(
     title, description, event_date, price, registration_link, 
     organisation, event_image, time, venue
 ) {
-    console.log("The event adding function is working");
-    console.log( event_date , "time"  )
+    
     try {
         const res = await prisma.event.create({
             data: {
@@ -114,7 +113,6 @@ export async function AddEvent(
             }
         });
 
-        console.log("Event added successfully:", res);
         return res;
     } catch (error) {
         console.error("Error adding event:", error);  // Log the actual error

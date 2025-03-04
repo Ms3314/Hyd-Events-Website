@@ -44,7 +44,7 @@ export const AuthController = {
                         message : "The Account has been created succssfully" , 
                     })
                 }
-                console.log(userAdded) ; 
+                // console.log(userAdded) ; 
 
             });
         });

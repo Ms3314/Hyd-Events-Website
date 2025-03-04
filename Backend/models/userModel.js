@@ -13,7 +13,6 @@ export async function GiveAllEvents() {
 
 export async function GiveOrgWithEvents(orgid) {
     try {
-        console.log(orgid , "did we reach over here")
         const orgs = await prisma.organization.findUnique({
             where : {
                 id : Number(orgid)

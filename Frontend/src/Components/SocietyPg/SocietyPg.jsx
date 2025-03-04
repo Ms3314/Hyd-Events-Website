@@ -160,10 +160,7 @@ const SocietyPg = () => {
     fetchOrganizationData();
   }, [orgid]);
 
-  const handleRegister = () => {
-    // Add registration functionality here
-    console.log("Register clicked for organization:", data?.name);
-  };
+ 
 
   if (serverError) {
     return <ServerError />;

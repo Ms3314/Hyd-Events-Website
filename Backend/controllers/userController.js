@@ -5,7 +5,7 @@ export const UserController  = {
     FindOrgWithEvents : async (req ,res) => {
         try {
             const {orgid} = req.params;
-            console.log("did we get the orgid" , orgid)
+            // console.log("did we get the orgid" , orgid)
             const orgsWithEvents = await GiveOrgWithEvents(orgid);
             if (orgsWithEvents) {
                 return res.status(200).json({
@@ -66,9 +66,9 @@ export const UserController  = {
     FindEvent : async (req ,res) => {
         try {
             const eventid = req.params.eventid
-            console.log("params : " , eventid )
+            // console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
-            console.log("this is the details of the specific event" , events)
+            // console.log("this is the details of the specific event" , events)
             res.status(200).json({
                 success: true,
                 message: "Events retrieved successfully",

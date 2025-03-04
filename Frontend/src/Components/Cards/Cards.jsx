@@ -9,7 +9,6 @@ const Cards = () => {
         async function GetEvents() {
           try {
             const response = await axios.get("http://localhost:3000/api/v1/user/events");
-            console.log(response.data)
             setEventData(response.data.events);
           } catch (error) {
             console.error("Error fetching events:", error);
@@ -18,7 +17,6 @@ const Cards = () => {
           }
         }
         GetEvents();
-        console.log(eventData)
     }, []);
     
     if (loading) {
@@ -31,15 +29,13 @@ const Cards = () => {
       )
     }
     
+
     
-    if (!eventData) {
-      setTimeout(()=>{
-        setLoading(true)
-      },100)
+    if (!eventData.length) {
       return (
         <>
         <div className='h-screen flex flex-col align-middle justify-center'>
-          <p className='text-slate-400 text-2xl'>No events Found , Add your first One !!</p>
+          <p className='text-slate-400 text-2xl'>No events Found !!</p>
         </div>
         </>
       )
@@ -51,7 +47,7 @@ const Cards = () => {
       <>
     
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-6 m-8 p-8 '>
-              {eventData.map((item , id) => (
+              {eventData.slice(0,8).map((item , id) => (
                   <Cardcomponent  item={item} key={id} />
               ))}
           </div>
@@ -68,11 +64,9 @@ const Cards = () => {
 
 const Cardcomponent = ({item}) => {
     let navigate = useNavigate();
-    console.log("is this a date" , item.fee)
     const eventDate = new Date(item.event_date)
     const date = eventDate.getDate();
     const month = eventDate.toLocaleString("en-US" , {month : "long"}).slice(0,3);
-    console.log(month , date , "this might be the month and date")
     function SpecificEventPage  (item)  {
         // here i got the data of the card
         navigate(`/evntdetails/${item.id}`);
@@ -100,7 +94,7 @@ const Cardcomponent = ({item}) => {
                      {/* <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z"/></svg> */}
                     {item.price == " " ? "Free" : "₹" + item.price }
                 </div>
-                <button className='bottom-2 right-2 pb-4 pl-20 text-xl' key={item.id} onClick={() => SpecificEventPage(item)}>
+                <button className='bottom-2  right-2 pb-4 pl-20 text-xl' key={item.id} onClick={() => SpecificEventPage(item)}>
                  <svg  xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px" fill="#0000F5"><path d="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"/></svg>
                 </button>
             </div>

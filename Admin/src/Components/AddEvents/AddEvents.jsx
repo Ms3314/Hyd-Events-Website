@@ -25,7 +25,7 @@ const AddEvents = () => {
   const month = eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3);
  
   const finalSubmit =async () => {
-    console.log(currentEvent , "this is the current event")
+    // console.log(currentEvent , "this is the current event")
     const response = await axios.post(`http://localhost:3000/api/v1/admin/event`,currentEvent , {
       headers : {
         "Authorization" : `Bearer ${localStorage.getItem("token")}`,
@@ -33,7 +33,7 @@ const AddEvents = () => {
       }
     })
     toast.success("Event Added Succesfully !! ")
-    console.log(response , "tell mee ")
+    // console.log(response , "tell mee ")
     setCurrentEvent({
       title: '',
       description: '',
@@ -56,23 +56,20 @@ const AddEvents = () => {
       toast.error("Please enter an Poster/related event_image");
       return ;
     } 
-    console.log(event_imageUpload , "the event image ")
-    console.log(currentEvent)
+    // console.log(event_imageUpload , "the event image ")
+    // console.log(currentEvent)
     
     const event_imageref = ref(storage , `event_images/${event_imageUpload.name + v4() }`)
     await uploadBytes(event_imageref , event_imageUpload).then( (res)=>{
       getDownloadURL(res.ref).then(async (ans)=>{
-        console.log("this is the answer" , ans)
+        // console.log("this is the answer" , ans)
         currentEvent.event_image = ans;
-        console.log("so the event image has been set ig" , currentEvent.event_image)
+        // console.log("so the event image has been set ig" , currentEvent.event_image)
         await finalSubmit();
       });
     })
   };
 
-  useEffect(()=>{
-    console.log(currentEvent)
-  },[currentEvent])
 
   return (
     <div className='flex flex-col items-center justify-center '>

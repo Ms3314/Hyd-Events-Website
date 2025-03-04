@@ -13,19 +13,37 @@ const Register = () => {
     });
   
     const navigate = useNavigate();
-  
+    const checkCred = () => {
+      const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z]).{8,}$/;
+      const validateEmailRegex = /^\S+@\S+\.\S+$/;
+
+      if (!passwordRegex.test(registerData.password)) {
+        toast.error("Your Password should have atleast 8 charaters with atleast one digit and an upper and lower caseletter ")
+        return false;
+      }
+      if (!validateEmailRegex.test(registerData.email)) {
+        toast.error("Invalid Email Adress ")
+        return false;
+      }
+      return true;
+    }
     const submitRegisterForm = async () => {
       if (!registerData.email || !registerData.password) {
         toast.error("Please fill in all required fields!");
         return;
       }
-  
+      
       try {
+        // console.log("helloooo")
+        if (!checkCred()) {
+          // console.log("Hello something wrong")
+          return 0;
+        }
+        // console.log("what is the problem")
         const payload = await axios.post(
           "http://localhost:3000/api/v1/admin/signup",
           registerData
         );
-  
         if (payload.status === 200) {
           toast.success("Account created successfully!");
           toast.success("Please Login to continue.");

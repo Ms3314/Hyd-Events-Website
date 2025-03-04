@@ -15,15 +15,16 @@ useEffect(() => {
   const cachedEvents = localStorage.getItem("events")
   const lastFetched =  localStorage.getItem("events_lastFetched")
   const tenMin = 10*60*1000;
-  if(!cachedEvents && !lastFetched && !(Date.now - lastFetched < tenMin)) {
+  if(!cachedEvents || !(cachedEvents.length) || !lastFetched || !(Date.now - lastFetched < tenMin)) {
     async function GetEvents() {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/admin/event", {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/event`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         });
+        // console.log(response.data.events)
         setEventData(response.data.events);
         localStorage.setItem("events" , JSON.stringify(response.data.events))
         localStorage.setItem("events_lastFetched" , Date.now()); // this thing stores the time stamp
@@ -54,9 +55,6 @@ if (loading) {
 
 
 if (!eventData.length) {
-  setTimeout(()=>{
-    setLoading(true)
-  },100)
   return (
     <>
     <div className='h-screen flex flex-col align-middle justify-center'>
