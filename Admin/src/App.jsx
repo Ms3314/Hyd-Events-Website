@@ -28,7 +28,7 @@ function App() {
   
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/v1/admin/checkToken",
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/checkToken`,
         {},
         {
           withCredentials : true ,
