@@ -8,7 +8,21 @@ import userRouter from "./routes/user.js";
 const app = express();
 const port = process.env.PORT || 3000 ; 
 
-app.use(cors());
+const allowedOrigins = ["https://hyd-events-website-admin.onrender.com"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // Allow cookies & authentication headers if needed
+  })
+);
+
 app.use(cookieParser());
 app.use(express.json());
 
