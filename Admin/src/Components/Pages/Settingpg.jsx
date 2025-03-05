@@ -16,12 +16,13 @@ const Settingpg = () => {
         about:'',
         orgBanner: '',
         orgPic : '',
+        memberSize: 0,
       });
 
       useEffect(()=>{
           // console.log("I am being called")
           async function  getTheOrgDetail() {
-            const response = await axios.get(`http://localhost:3000/api/v1/admin/org` ,  {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/org` ,  {
             headers : {
               "Authorization" : `Bearer ${localStorage.getItem("token")}`,
               "Content-Type" : "application/json",
@@ -64,7 +65,7 @@ const Settingpg = () => {
         // console.log("Final data being sent to backend:", updatedSetting);
       
         // Now send the updated data to the backend
-        const response = await axios.put(`http://localhost:3000/api/v1/admin/org`, updatedSetting, {
+        const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/org`, updatedSetting, {
           headers: {
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
@@ -79,6 +80,7 @@ const Settingpg = () => {
       return (
         <div className="flex min-h-screen bg-gray-100">
           {/* Sidebar */}
+          <Toaster/>
           <div className="w-64 bg-white shadow-md p-6 hidden md:block">
             <h2 className="text-xl font-bold mb-6">Settings</h2>
             <ul className="space-y-4">
@@ -139,6 +141,22 @@ const Settingpg = () => {
                     onChange={(e) => setCurrentSetting((prev) => ({ ...prev, about: e.target.value }))}
                     className="w-full max-h-[400px] border border-gray-300 rounded-lg p-3 mt-1 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
+                </div>
+    
+                {/* Member Size */}
+                <div>
+                  <label className="block text-gray-600 font-medium">Number of Members</label>
+                  <select
+                    value={currentSetting.memberSize || 0}
+                    onChange={(e) => setCurrentSetting((prev) => ({ ...prev, memberSize: parseInt(e.target.value) }))}
+                    className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value={0}>Not Specified</option>
+                    <option value={1}>10-20 members</option>
+                    <option value={2}>20-50 members</option>
+                    <option value={3}>50-100 members</option>
+                    <option value={4}>100+ members</option>
+                  </select>
                 </div>
     
                 {/* Uploads */}

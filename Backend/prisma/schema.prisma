@@ -23,6 +23,7 @@ model Organization {
   orgPic String? 
   orgBanner String?
   Socials String[] 
+  memberSize Int @default(0)
   events Event[] @relation("OrganizationToEvent") 
 }
 // this is now a many to many relation over here 
@@ -40,6 +41,7 @@ model Event {
   views          Int?
   form_clicks    Int? 
   event_image     String?
+  event_type      String @default("General")
   organisation  Organization[] @relation("OrganizationToEvent") 
   // basically it takes the realtion to to the Organisation ke id 
 }

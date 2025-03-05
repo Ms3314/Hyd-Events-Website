@@ -1,4 +1,3 @@
-
 import HomePage from './Components/Pages/HomePage'
 import EventPage from './Components/Pages/EventPage'
 import About from './Components/Pages/About'
@@ -23,7 +22,7 @@ function App() {
           < Route index element={<HomePage />} />
           < Route path='/about' element={<About />} />
           < Route path='/events' element={<EventPage />} />
-          < Route path='/evntdetails/:id' element={<Eventsdatapage />} />
+          < Route path='/eventsdetail/:id' element={<Eventsdatapage />} />
           < Route path='/societydetails/:orgid' element={<SocietyPg/>} />
           < Route path='/*' element={<NotFound/>} />
       </Route>

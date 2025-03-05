@@ -69,31 +69,31 @@ export async function DoesUserWithIdExist(orgid) {
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
 
-export async function UpdateUserById (userid, name, college, email, about, orgBanner,  orgPic ) {
+export async function UpdateUserById (userid, name, college, email, about, orgBanner, orgPic, memberSize) {
     try {
-        const res = await prisma.organization.update({
-            where : {
-                id : Number(userid) 
-            } ,
-            data : {
-                name ,
-                email ,
-                college ,
-                about ,
-                orgBanner ,
-                orgPic
+        const user = await prisma.organization.update({
+            where: {
+                id: Number(userid)
+            },
+            data: {
+                name,
+                college,
+                email,
+                about,
+                orgBanner,
+                orgPic,
+                memberSize: parseInt(memberSize) || 0
             }
-        })
-        return res ;
+        });
+        return user;
     } catch (error) {
-        // console.log(error)
-        throw new Error(error.message || "An error occured while Updating user details")
+        throw new Error(error.message || "An error occurred while updating the user");
     }
 }
 
 export async function AddEvent(
     title, description, event_date, price, registration_link, 
-    organisation, event_image, time, venue
+    organisation, event_image, time, venue, event_type
 ) {
     
     try {
@@ -107,6 +107,7 @@ export async function AddEvent(
                 event_image,
                 time: time,  // Ensure it's a DateTime format
                 venue,
+                event_type,
                 organisation: {
                     connect: [{ id: organisation }]  // ✅ Correct Many-to-Many syntax
                 }
@@ -143,7 +144,7 @@ export async function CheckEventExist (eventid) {
 // NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
 // edding feature 
 // basically ak se main pura kar de sakne isme i dont have to everything 
-export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image , time , venue  ) {
+export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image , time , venue, event_type  ) {
     // need to check if an existing event like this exist or not right 
         try {
             await CheckEventExist(eventid)
@@ -161,7 +162,10 @@ export async function EditEvent (  eventid , title , description , event_date , 
                     price ,
                     registration_link ,
                     organisation ,
-                    event_image 
+                    event_image,
+                    time,
+                    venue,
+                    event_type
                 }
             
         }) 

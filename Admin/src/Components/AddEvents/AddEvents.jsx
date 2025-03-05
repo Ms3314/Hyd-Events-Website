@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const AddEvents = () => {
   const [event_imageUpload , setevent_imageUpload] = useState(null);
+  const [eventType, setEventType] = useState("1");
   const [currentEvent, setCurrentEvent] = useState({
     title: '',
     description: '',
@@ -19,21 +20,38 @@ const AddEvents = () => {
     event_image : '',
     deadline : '' ,
     size : '' ,
+    event_type: 'General',
   });
   const eventDate = new Date(currentEvent?.event_date)
   const date = eventDate.getDate();
   const month = eventDate.toLocaleString("en-US", { month: "long" }).slice(0, 3);
  
   const finalSubmit =async () => {
-    // console.log(currentEvent , "this is the current event")
-    const response = await axios.post(`http://localhost:3000/api/v1/admin/event`,currentEvent , {
-      headers : {
-        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
-        "Content-Type" : "application/json",
+    const eventData = {
+      title: currentEvent.title,
+      description: currentEvent.description,
+      event_date: currentEvent.event_date,
+      time: currentEvent.time,
+      venue: currentEvent.venue,
+      price: currentEvent.selectType === "2" ? 0 : currentEvent.price,
+      registration_link: currentEvent.registration_link,
+      event_image: currentEvent.event_image,
+      deadline: currentEvent.deadline,
+      size: currentEvent.size,
+      event_type: currentEvent.event_type
+    };
+
+    const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/event`, eventData, {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
       }
-    })
-    toast.success("Event Added Succesfully !! ")
-    // console.log(response , "tell mee ")
+    });
+
+    if (response.status === 200) {
+      toast.success("Event Added Successfully!!");
+    }
+    
     setCurrentEvent({
       title: '',
       description: '',
@@ -43,11 +61,11 @@ const AddEvents = () => {
       selectType:'2',
       price: '',
       registration_link: '',
-      event_image : '',
-      deadline : '' ,
-      size : '' ,
+      event_image: '',
+      deadline: '',
+      size: '',
+      event_type: 'General',
     });
-
   }
   const handleEventSubmit = async (e) => {
     e.preventDefault();
@@ -230,8 +248,6 @@ const AddEvents = () => {
                 />
             )
           } 
-            
-            
             </div>
 
             
@@ -259,7 +275,36 @@ const AddEvents = () => {
                 }}
               />
             </div>
-
+            {/* make a state and display a text box when option 4 is selected or make something liek i can input custom events when i chose other  */}
+            <div className='gap-5 flex flex-row'>
+              <select 
+                name="eventType" 
+                id="eventType" 
+                value={eventType}
+                onChange={(e) => {
+                  setEventType(e.target.value);
+                  setCurrentEvent(prev => ({
+                    ...prev,
+                    event_type: e.target.value === "4" ? "" : e.target.options[e.target.selectedIndex].text
+                  }));
+                }}
+                className="border-2 rounded-lg p-2 w-full"
+              >
+                <option value="1">Hackathon</option>
+                <option value="2">Tech Event</option>
+                <option value="3">Fun Event</option>
+                <option value="4">other</option>
+              </select>
+              <input 
+                type="text" 
+                disabled={eventType !== "4"}
+                value={eventType === "4" ? currentEvent.event_type : ""}
+                onChange={(e) => setCurrentEvent(prev => ({ ...prev, event_type: e.target.value }))}
+                placeholder="Enter custom event type"
+                className="border-2 rounded-lg p-2 w-full" 
+              />
+            </div>
+            
             {/* Submit Button */}
             <div className="flex justify-center">
               <button

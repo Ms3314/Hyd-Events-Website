@@ -29,16 +29,20 @@ export const orgController = {
             email,
             about,
             orgBanner,
-            orgPic 
+            orgPic,
+            memberSize
             } = req.body;
             // console.log(req.body , "Why am i not able to see it even thoough i sen it ")
             // console.log(orgPic , orgBanner , "the updated images")
-            const userOrg = await UpdateUserById( userid, name,
-            college,
-            email,
-            about,
-            orgBanner,
-            orgPic
+            const userOrg = await UpdateUserById( 
+                userid, 
+                name,
+                college,
+                email,
+                about,
+                orgBanner,
+                orgPic,
+                memberSize
             )
             // console.log(userOrg , "The response")
             if(userOrg) {
@@ -56,8 +60,5 @@ export const orgController = {
             });
         }
     }
-        
-        
-        
 }
     

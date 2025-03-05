@@ -19,7 +19,7 @@ const Eventsdatapage = () => {
   useEffect(()=>{
     const FindEventdatas = async () => {
       setLoading(true)
-      const events = await axios.get(`http://localhost:3000/api/v1/user/event/${id}`)
+      const events = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/event/${id}`)
       
       setData(events.data.events)
       SetMonthAndDate(events.data.events.event_date);
@@ -144,7 +144,7 @@ const Eventsdatapage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Team Size</h4>
-                      <p className="text-gray-600">{data?.Teamsize}</p>
+                      <p className="text-gray-600">{data?.size || "Not specified"}</p>
                     </div>
                   </div>
                   
@@ -154,7 +154,13 @@ const Eventsdatapage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Deadline</h4>
-                      <p className="text-gray-600">{data?.DeadLine}</p>
+                      <p className="text-gray-600">
+                        {data?.Deadline ? new Date(data.Deadline).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        }) : "Not specified"}
+                      </p>
                     </div>
                   </div>
                 </div>

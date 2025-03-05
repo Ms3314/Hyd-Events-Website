@@ -41,7 +41,7 @@ const Register = () => {
         }
         // console.log("what is the problem")
         const payload = await axios.post(
-          "http://localhost:3000/api/v1/admin/signup",
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/signup`,
           registerData
         );
         if (payload.status === 200) {
