@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from 'cors'
 import userRouter from "./routes/user.js";
 const app = express();
-
+const port = process.env.PORT || 3000 ; 
 
 app.use(cors());
 app.use(cookieParser());
@@ -15,8 +15,8 @@ app.use(express.json());
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/user" , userRouter);
  
-app.listen(process.env.PORT || 3000, () => {
-    console.log("Server is running on port 3000");
+app.listen(port , () => {
+    console.log(`Server is running on port ${port}`);
 });
 
 
