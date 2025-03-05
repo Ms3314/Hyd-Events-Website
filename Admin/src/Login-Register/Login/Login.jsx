@@ -13,9 +13,11 @@ const Login = () => {
       if (loginData.email === "" || loginData.password === "") return;
   
       try {
-        const payload = await axios.post("http://localhost:3000/api/v1/admin/signin", loginData);
+        const payload = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/signin`, loginData);
         if (payload.status === 200) {
           localStorage.setItem("token", payload.data.token);
+          localStorage.removeItem("events")
+          localStorage.removeItem("events_lastFetched")
           window.location.reload();
         } else {
           alert("No data available");
@@ -32,19 +34,21 @@ const Login = () => {
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
             <div className="mb-4">
+              <label htmlFor="" className='p-1 mb-3'>Email</label>
               <input
                 type="email"
                 className="w-full p-2 border rounded-lg outline-none"
-                placeholder="Email Id"
+                placeholder="coolclub@mj.com"
                 value={loginData.email}
                 onChange={(e) => setLoginData((prev) => ({ ...prev, email: e.target.value }))}
               />
             </div>
             <div className="mb-4">
+              <label htmlFor="" className='p-1 mb-3'>Password</label>
               <input
                 type="password"
                 className="w-full p-2 border rounded-lg outline-none"
-                placeholder="Password"
+                placeholder="Cool#1#Club"
                 onChange={(e) => setLoginData((prev) => ({ ...prev, password: e.target.value }))}
               />
             </div>

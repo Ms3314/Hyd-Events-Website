@@ -13,7 +13,8 @@
 if you consider yourself confident in the following technologies install the project locally , tweek around with the codebase and try to impliment some new features 
 
 ## Planned Features 
-- Organization display section (Backend already done for this) 
+- Edit Event Functionality 
+- Add some social media accounts from admin functionality in form 
 - Search Events and Organization bar and the Backend for it 
 - Make custom forms for Registration and Dashboard for Admin and backend for it  
 - Make new costumizations for admin , use something like Editor.js 

@@ -23,7 +23,7 @@ function App() {
   const isTokenValid = async () => {
     if (!token) return false;
   
-    console.log("Checking token:", token);
+    // console.log("Checking token:", token);
   
     try {
       const response = await axios.post(
@@ -37,10 +37,10 @@ function App() {
         }
       );
       
-      console.log("Token validation response:", response.data); // Debugging log
+      // console.log("Token validation response:", response.data); // Debugging log
       return response.data?.isValid ?? false; // Ensure a boolean response
     } catch (error) {
-      console.error("Error verifying token:", error.response?.data || error.message);
+      // console.error("Error verifying token:", error.response?.data || error.message);
       return false;
     }
   };

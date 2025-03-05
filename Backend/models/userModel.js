@@ -13,7 +13,6 @@ export async function GiveAllEvents() {
 
 export async function GiveOrgWithEvents(orgid) {
     try {
-        console.log(orgid , "did we reach over here")
         const orgs = await prisma.organization.findUnique({
             where : {
                 id : Number(orgid)
@@ -25,6 +24,15 @@ export async function GiveOrgWithEvents(orgid) {
         return orgs ;
     } catch (error) {
         throw new Error(error.message || "Something went wrong while getting orgs and events")
+    }
+}
+
+export async function GiveAllOrgs () {
+    try {
+        const orgs = await prisma.organization.findMany() ;
+        return orgs ;
+    } catch (error) {
+        throw new Error(error.message || "Something went wrong while trying to get the Organizations")
     }
 }
 

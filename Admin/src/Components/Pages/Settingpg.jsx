@@ -16,86 +16,71 @@ const Settingpg = () => {
         about:'',
         orgBanner: '',
         orgPic : '',
+        memberSize: 0,
       });
 
       useEffect(()=>{
-        const setting = localStorage.getItem("setting" )
-        const settingTime = localStorage.getItem("settingTime")
-        const tenmin = 10*60*1000;
-        console.log(setting )
-        console.log(JSON.parse(settingTime) - Date.now() < tenmin)
-        if (JSON.parse(setting) && (Date.now() - JSON.parse(settingTime) < tenmin ))
-        {
-          setCurrentSetting(JSON.parse(setting))
-
-        }else {
-          console.log("I am being called")
+          // console.log("I am being called")
           async function  getTheOrgDetail() {
-            const response = await axios.get(`http://localhost:3000/api/v1/admin/org` ,  {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/org` ,  {
             headers : {
               "Authorization" : `Bearer ${localStorage.getItem("token")}`,
               "Content-Type" : "application/json",
             }
             })
-            console.log(response.data.org)
+            // console.log(response.data.org)
             setCurrentSetting(response.data.org)
           }
           getTheOrgDetail();
-        }
+        
       },[])
 
       const handleSubmitSetting = async (e) => {
         e.preventDefault();
+        
+        let updatedSetting = { ...currentSetting };
+      
+        // Upload Logo First
         if (logo) {
-          console.log("the logo exist" . logo)
-          const event_logoref = ref(storage , `event_images/${logo.name + v4() }`)
-          await uploadBytes(event_logoref , logo).then( (res)=>{
-              getDownloadURL(res.ref).then(async (ans)=>{
-              console.log("this is the answer" , ans)
-              currentSetting.logo = ans ;
-              console.log("so the event image has been set ig" , currentSetting.logo)
-              // await finalSubmit();
-            });
-        })
+          // console.log("Uploading logo:", logo.name);
+          const event_logoref = ref(storage, `event_images/${logo.name + v4()}`);
+          const logoSnapshot = await uploadBytes(event_logoref, logo);
+          const logoUrl = await getDownloadURL(logoSnapshot.ref);
+          
+          // console.log("Logo uploaded successfully. URL:", logoUrl);
+          updatedSetting.orgPic = logoUrl;
         }
+      
+        // Upload Banner Next
         if (banner) {
-          console.log("the logo exist" . logo)
-          const event_bannerref = ref(storage , `event_images/${banner.name + v4() }`)
-          await uploadBytes(event_bannerref , banner).then( (res)=>{
-              getDownloadURL(res.ref).then(async (ans)=>{
-              console.log("this is the answer" , ans)
-              currentSetting.banner = ans ;
-              console.log("so the event image has been set ig" , currentSetting.logo)
-              // await finalSubmit();
-            });
-        })
+          // console.log("Uploading banner:", banner.name);
+          const event_bannerref = ref(storage, `orgBanner/${banner.name + v4()}`);
+          const bannerSnapshot = await uploadBytes(event_bannerref, banner);
+          const bannerUrl = await getDownloadURL(bannerSnapshot.ref);
+          
+          // console.log("Banner uploaded successfully. URL:", bannerUrl);
+          updatedSetting.orgBanner = bannerUrl;
         }
-        const response = await axios.put(`http://localhost:3000/api/v1/admin/org` , currentSetting , {
-          headers : {
-            "Authorization" : `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type" : "application/json",
-        }
-        })
-        
-        if (response.status == 200) {
-          toast.success("Setting has been updated successfully")
-          localStorage.setItem("setting" ,JSON.stringify(currentSetting) )
-          localStorage.setItem("settingTime" , JSON.stringify(Date.now()))   
-          localStorage.removeItem("token") 
-        }    
-        
-        setCurrentSetting({ 
-        name: '',
-        college: '',
-        email: '',
-        about:'',
-        orgBanner: '',
-        orgPic:"",
+      
+        // console.log("Final data being sent to backend:", updatedSetting);
+      
+        // Now send the updated data to the backend
+        const response = await axios.put(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/org`, updatedSetting, {
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          }
         });
+      
+        if (response.status == 200) {
+          toast.success("Setting has been updated successfully");
+        }
       };
+      
       return (
         <div className="flex min-h-screen bg-gray-100">
           {/* Sidebar */}
+          <Toaster/>
           <div className="w-64 bg-white shadow-md p-6 hidden md:block">
             <h2 className="text-xl font-bold mb-6">Settings</h2>
             <ul className="space-y-4">
@@ -158,14 +143,30 @@ const Settingpg = () => {
                   />
                 </div>
     
+                {/* Member Size */}
+                <div>
+                  <label className="block text-gray-600 font-medium">Number of Members</label>
+                  <select
+                    value={currentSetting.memberSize || 0}
+                    onChange={(e) => setCurrentSetting((prev) => ({ ...prev, memberSize: parseInt(e.target.value) }))}
+                    className="w-full border border-gray-300 rounded-lg p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value={0}>Not Specified</option>
+                    <option value={1}>10-20 members</option>
+                    <option value={2}>20-50 members</option>
+                    <option value={3}>50-100 members</option>
+                    <option value={4}>100+ members</option>
+                  </select>
+                </div>
+    
                 {/* Uploads */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-600 font-medium">Upload Logo</label>
+                    <label className="block text-gray-600 font-medium">Upload Club Logo</label>
                     <input type="file" className="w-full border border-gray-300 rounded-lg p-2" onChange={(e) => setLogoUpload(e.target.files[0])} />
                   </div>
                   <div>
-                    <label className="block text-gray-600 font-medium">Upload Banner</label>
+                    <label className="block text-gray-600 font-medium">Upload Club Banner</label>
                     <input type="file" className="w-full border border-gray-300 rounded-lg p-2" onChange={(e) => setBannerUpload(e.target.files[0])} />
                   </div>
                 </div>

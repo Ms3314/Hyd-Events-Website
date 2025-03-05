@@ -9,7 +9,7 @@ export async function CheckEmailPass(req , res , next) {
     const user = await FindUser(email) ; 
     if(user) {
         bcrypt.compare(password , user.password , function(err, ans) {
-            console.log(ans , "this is the response")
+            // console.log(ans , "this is the response")
             if (ans === true) {
                 next() 
             }
@@ -30,9 +30,9 @@ export async function CheckEmailPass(req , res , next) {
 }
 
 export function CheckTokenExist(req , res , next ) {
-    console.log("the headers are : " , req.headers)
+    // console.log("the headers are : " , req.headers)
     const authHeader = req.headers.authorization;
-    console.log("did the delete thing reach here" , authHeader)
+    // console.log("did the delete thing reach here" , authHeader)
         let token = null ;
         if (authHeader && authHeader.startsWith("Bearer ")) {
             token = authHeader.split(" ")[1];
@@ -44,7 +44,7 @@ export function CheckTokenExist(req , res , next ) {
                 message : "the token does not exist"
             })
         }
-        console.log(token , "does this thing exist")
+        // console.log(token , "does this thing exist")
         // console.log("this is the token" , token)
         jwt.verify(token, process.env.SECRET_KEY , async function(err, decoded) {
             // console.log(decoded.user) // bar

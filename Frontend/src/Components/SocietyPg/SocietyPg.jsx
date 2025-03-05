@@ -140,7 +140,7 @@ const SocietyPg = () => {
     const fetchOrganizationData = async () => {
       setLoading(true);
       try {
-        const org = await axios.get(`http://localhost:3000/api/v1/user/org/${orgid}`);
+        const org = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/org/${orgid}`);
         
         if (org.status === 200) {
           setData(org.data.orgdata);
@@ -160,10 +160,7 @@ const SocietyPg = () => {
     fetchOrganizationData();
   }, [orgid]);
 
-  const handleRegister = () => {
-    // Add registration functionality here
-    console.log("Register clicked for organization:", data?.name);
-  };
+ 
 
   if (serverError) {
     return <ServerError />;
@@ -303,7 +300,13 @@ const SocietyPg = () => {
               </svg>
               <div className="text-gray-700">
                 <span className="font-medium">Members</span>
-                <p className="text-sm">{data?.NoofMem || "Not specified"}</p>
+                <p className="text-sm">
+                  {data?.memberSize === 0 ? "Not specified" : 
+                   data?.memberSize === 1 ? "10-20 members" :
+                   data?.memberSize === 2 ? "20-50 members" :
+                   data?.memberSize === 3 ? "50-100 members" :
+                   data?.memberSize === 4 ? "100+ members" : "Not specified"}
+                </p>
               </div>
             </div>
           </div>

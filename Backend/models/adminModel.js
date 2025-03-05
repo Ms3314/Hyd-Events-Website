@@ -12,7 +12,7 @@ export async function AddUser(name , email , college ,password ) {
                 college ,
             }
         })
-        console.log(res , "the data we send");
+        // console.log(res , "the data we send");
         return res ;  
     } catch (error) {
         return error;
@@ -52,7 +52,7 @@ export async function FindUserById (userid) {
 
 
 export async function DoesUserWithIdExist(orgid) {
-    console.log("the id for the org is" , orgid)
+    // console.log("the id for the org is" , orgid)
     try {
         const res = await prisma.organization.findUnique({
             where : {
@@ -69,33 +69,33 @@ export async function DoesUserWithIdExist(orgid) {
 // the organisation will be an array over here 
 //.... this is like a little messed up like anyone can come up and add for another person like we need to add like main hi maire event ke naam se dal sakta 
 
-export async function UpdateUserById (userid, name, college, email, about, orgBanner,  orgPic ) {
+export async function UpdateUserById (userid, name, college, email, about, orgBanner, orgPic, memberSize) {
     try {
-        const res = await prisma.organization.update({
-            where : {
-                id : Number(userid) 
-            } ,
-            data : {
-                name ,
-                email ,
-                college ,
-                about ,
-                orgBanner ,
-                orgPic
+        const user = await prisma.organization.update({
+            where: {
+                id: Number(userid)
+            },
+            data: {
+                name,
+                college,
+                email,
+                about,
+                orgBanner,
+                orgPic,
+                memberSize: parseInt(memberSize) || 0
             }
-        })
-        return res ;
+        });
+        return user;
     } catch (error) {
-        throw new Error(error.message || "An error occured while Updating user details")
+        throw new Error(error.message || "An error occurred while updating the user");
     }
 }
 
 export async function AddEvent(
     title, description, event_date, price, registration_link, 
-    organisation, event_image, time, venue
+    organisation, event_image, time, venue, event_type
 ) {
-    console.log("The event adding function is working");
-    console.log( event_date , "time"  )
+    
     try {
         const res = await prisma.event.create({
             data: {
@@ -107,13 +107,13 @@ export async function AddEvent(
                 event_image,
                 time: time,  // Ensure it's a DateTime format
                 venue,
+                event_type,
                 organisation: {
                     connect: [{ id: organisation }]  // ✅ Correct Many-to-Many syntax
                 }
             }
         });
 
-        console.log("Event added successfully:", res);
         return res;
     } catch (error) {
         console.error("Error adding event:", error);  // Log the actual error
@@ -144,7 +144,7 @@ export async function CheckEventExist (eventid) {
 // NOTE THAT THE DATA WHEN SEND SHOULDNT BE SEND INDUVIDUALY ... LIKE ALLOF THEM MUSTT BE SEND HERE 
 // edding feature 
 // basically ak se main pura kar de sakne isme i dont have to everything 
-export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image , time , venue  ) {
+export async function EditEvent (  eventid , title , description , event_date , price , registration_link , organisation , event_image , time , venue, event_type  ) {
     // need to check if an existing event like this exist or not right 
         try {
             await CheckEventExist(eventid)
@@ -162,7 +162,10 @@ export async function EditEvent (  eventid , title , description , event_date , 
                     price ,
                     registration_link ,
                     organisation ,
-                    event_image 
+                    event_image,
+                    time,
+                    venue,
+                    event_type
                 }
             
         }) 

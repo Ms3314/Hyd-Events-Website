@@ -17,18 +17,17 @@ const Eventsdatapage = () => {
   let navigate = useNavigate();
   
   useEffect(()=>{
-    console.log(id ,"this is the id")    
     const FindEventdatas = async () => {
       setLoading(true)
-      const events = await axios.get(`http://localhost:3000/api/v1/user/event/${id}`)
-      console.log(events , "these are the thing")
-      console.log( "the events are these" , events.data.events)
+      const events = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/user/event/${id}`)
+      
       setData(events.data.events)
       SetMonthAndDate(events.data.events.event_date);
       setLoading(false)
     } 
     FindEventdatas();
   },[])
+
 
   function ClubdataPage(data) {
     setData(data)
@@ -117,12 +116,14 @@ const Eventsdatapage = () => {
                 <div className="text-3xl font-bold text-gray-800 mb-2">
                   {data?.fee === undefined ? "Free Entry" : data?.fee}
                 </div>
-                <button 
-                  className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition duration-200 shadow-md"
-                  onClick={() => handleClick('')}
-                >
-                  Register Now
-                </button>
+                <a 
+                    href={data?.registration_link}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition duration-200 shadow-md text-center block"
+                  >
+                    Register Now
+                </a>
               </div>
               
               <div className="border-t border-gray-200 pt-4">
@@ -143,7 +144,7 @@ const Eventsdatapage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Team Size</h4>
-                      <p className="text-gray-600">{data?.Teamsize}</p>
+                      <p className="text-gray-600">{data?.size || "Not specified"}</p>
                     </div>
                   </div>
                   
@@ -153,7 +154,13 @@ const Eventsdatapage = () => {
                     </svg>
                     <div>
                       <h4 className="font-medium text-gray-800">Deadline</h4>
-                      <p className="text-gray-600">{data?.DeadLine}</p>
+                      <p className="text-gray-600">
+                        {data?.Deadline ? new Date(data.Deadline).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric'
+                        }) : "Not specified"}
+                      </p>
                     </div>
                   </div>
                 </div>

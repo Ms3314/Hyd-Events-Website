@@ -56,7 +56,7 @@ export const EventController = {
         }
     } ,
     EventDeleteByAdminOnly : async (req , res) => {
-        console.log("we reached to delete part")
+        // console.log("we reached to delete part")
         const org = req.userid ;
         const eventid = req.query.eventid ;
         console.log(org , eventid , "this is the event id and the org id")

@@ -1,11 +1,11 @@
-import { GiveAllEvents, GiveOneEvents, GiveOrgWithEvents } from "../models/userModel.js";
+import { GiveAllEvents, GiveAllOrgs, GiveOneEvents, GiveOrgWithEvents } from "../models/userModel.js";
 
 // Controller function to get all events
 export const UserController  = {
     FindOrgWithEvents : async (req ,res) => {
         try {
             const {orgid} = req.params;
-            console.log("did we get the orgid" , orgid)
+            // console.log("did we get the orgid" , orgid)
             const orgsWithEvents = await GiveOrgWithEvents(orgid);
             if (orgsWithEvents) {
                 return res.status(200).json({
@@ -26,6 +26,24 @@ export const UserController  = {
                     error: error.message,
             })
         }
+    },
+    AllOrgs : async (req , res) => {
+        try {
+            // Fetch all events from the database using Prisma
+            const Allorgs = await GiveAllOrgs()
+            // Return success response with events data
+            return res.status(200).json({
+            success: true,
+            message: "Organizationd retrieved successfully",
+            Allorgs,
+            });
+        } catch (error) {
+            return res.status(500).json({
+            success: false,
+            message: "Failed to retrieve Organizations",
+            error: error.message,
+            });
+        }   
     },
     AllEvents : async (req , res) => {
     try {
@@ -48,9 +66,9 @@ export const UserController  = {
     FindEvent : async (req ,res) => {
         try {
             const eventid = req.params.eventid
-            console.log("params : " , eventid )
+            // console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
-            console.log("this is the details of the specific event" , events)
+            // console.log("this is the details of the specific event" , events)
             res.status(200).json({
                 success: true,
                 message: "Events retrieved successfully",

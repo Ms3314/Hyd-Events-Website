@@ -7,6 +7,22 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 import { deleteImage } from '../../firebase/deleteImage'
 
+const getEventStatus = (eventDate) => {
+  const today = new Date();
+  const eventDay = new Date(eventDate);
+  
+  // Reset hours to compare just the dates
+  today.setHours(0, 0, 0, 0);
+  eventDay.setHours(0, 0, 0, 0);
+  
+  if (eventDay.getTime() === today.getTime()) {
+    return { text: "Going On", className: "bg-green-500" };
+  } else if (eventDay < today) {
+    return { text: "Finished", className: "bg-red-500" };
+  } else {
+    return { text: "Latest", className: "bg-blue-500" };
+  }
+};
 
 const Cards = () => {
 const [loading , setLoading] = useState(true);
@@ -15,15 +31,16 @@ useEffect(() => {
   const cachedEvents = localStorage.getItem("events")
   const lastFetched =  localStorage.getItem("events_lastFetched")
   const tenMin = 10*60*1000;
-  if(!cachedEvents && !lastFetched && !(Date.now - lastFetched < tenMin)) {
+  if(!cachedEvents || !(cachedEvents.length) || !lastFetched || !(Date.now - lastFetched < tenMin)) {
     async function GetEvents() {
       try {
-        const response = await axios.get("http://localhost:3000/api/v1/admin/event", {
+        const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/event`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         });
+        console.log(response.data.events)
         setEventData(response.data.events);
         localStorage.setItem("events" , JSON.stringify(response.data.events))
         localStorage.setItem("events_lastFetched" , Date.now()); // this thing stores the time stamp
@@ -54,9 +71,6 @@ if (loading) {
 
 
 if (!eventData.length) {
-  setTimeout(()=>{
-    setLoading(true)
-  },100)
   return (
     <>
     <div className='h-screen flex flex-col align-middle justify-center'>
@@ -85,43 +99,54 @@ return (
 
 const Cardcomponent = ({item , setEventData , setLoading}) => {
     let navigate = useNavigate();
+    const eventDate = new Date(item.event_date);
+    const date = eventDate.getDate();
+    const month = eventDate.toLocaleString("en-US", {month: "long"}).slice(0, 3);
+    const status = getEventStatus(item.event_date);
+
     function EditEventPage(item)  {
-        // setContent(item)
         navigate("/editevent");
     }   
     
-    
     return (
-        
-    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col 
+        <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col 
                      hover:border-2 border-r-secondary border-t-primary border-l-secondary border-b-secondary">
       
-      <div className="h-64 relative">
+          <div className="h-64 relative">
             <img src={item.event_image} alt={item.title} className="w-full h-full object-contain" />
-            <div className="h-5 w-32 bg-primary flex items-center justify-center absolute bottom-0 text-white rounded-sm">{item.EventType}</div>
-      </div>
-      <div className="p-4">
-          <div className="flex flex-col">
-              <div className="flex text-sm flex-inline font-semibold text-gray-700 uppercase lg:gap-6 md:gap-4 gap-4 ">{item.month} <span className='text-primary text-lg-center'>{item.Date} </span>||
-              <div className="text-sm text-gray-600">{item.time}</div>||
-              <div className="text-sm text-red-600">Going On</div>
+            <div className="flex absolute bottom-0 w-full">
+             
+              <div className={`h-5 ${status.className} text-[17px] flex items-center justify-center text-white rounded-sm px-3 ml-1`}>
+                {status.text}
               </div>
-          
-          <div className="text-lg text-gray-600 uppercase font-bold m-1">{item.title}  </div>
-            <div className="text-sm text-gray-600 m-1">{item.venue}</div>
+            </div>
           </div>
-          <AlertComponent setLoading={setLoading} eventdata = {item} setEventData={setEventData}/>
-          <button className='flex-inline bottom-2 bg-slate-200 rounded-lg text-black py-1 px-4 w-16 text-lg font-bold m-4 left-8 text-center shadow-md' key={item.id} onClick={()=>EditEventPage(item)}>Edit</button> 
-      </div>
-    </div>
-
+          <div className="p-4">
+            <div className="flex flex-col">
+              <div className="flex text-sm flex-inline font-semibold text-gray-700 uppercase lg:gap-6 md:gap-4 gap-4">
+                {month} <span className='text-primary text-lg-center'>{date}</span>||
+                <div className="text-sm text-gray-600">{item.time}</div>
+              </div>
+              <div className="text-lg text-gray-600 uppercase font-bold m-1">{item.title}</div>
+              <div className="text-sm text-gray-600 m-1">{item.venue}</div>
+            </div>
+            <AlertComponent setLoading={setLoading} eventdata={item} setEventData={setEventData}/>
+            <button 
+              className='flex-inline bottom-2 bg-slate-200 rounded-lg text-black py-1 px-4 w-16 text-lg font-bold m-4 left-8 text-center shadow-md' 
+              key={item.id} 
+              onClick={()=>EditEventPage(item)}
+            >
+              Edit
+            </button> 
+          </div>
+        </div>
     )
 }
 
 const AlertComponent = ({eventdata , setEventData , setLoading}) => {
   const eventid = eventdata.id 
   const handleDeleteEvent = async () => {
-    const response = await axios.delete(`http://localhost:3000/api/v1/admin/event`, {
+    const response = await axios.delete(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/event`, {
       headers : {
         "Authorization" : `Bearer ${localStorage.getItem("token")}`,
         "Content-Type" : "application/json",
