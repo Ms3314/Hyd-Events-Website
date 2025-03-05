@@ -3,7 +3,7 @@ import Header from '../Cards/Header'
 
 const EventPage = () => {
   return (
-    <div className='h-screen'>
+    <div className=''>
     <Header/>
     <Cards/>
     <div></div>

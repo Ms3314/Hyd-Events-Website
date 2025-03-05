@@ -69,13 +69,13 @@ export const UserController  = {
             // console.log("params : " , eventid )
             const events = await GiveOneEvents(eventid)
             // console.log("this is the details of the specific event" , events)
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "Events retrieved successfully",
                 events,
             });
         } catch (error) {
-            res.status(500).json({
+            return res.status(500).json({
                 success: false,
                 message: "Failed to retrieve events",
                 error: error.message,

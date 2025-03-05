@@ -18,5 +18,6 @@ if you consider yourself confident in the following technologies install the pro
 - Search Events and Organization bar and the Backend for it 
 - Make custom forms for Registration and Dashboard for Admin and backend for it  
 - Make new costumizations for admin , use something like Editor.js 
-
+- do some cool shit like qr code when registered and veriifcation using qr code 
+- also we need to link it to the 
 

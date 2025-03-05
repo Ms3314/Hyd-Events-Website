@@ -39,7 +39,7 @@ const Settingpg = () => {
         e.preventDefault();
         
         let updatedSetting = { ...currentSetting };
-      
+        
         // Upload Logo First
         if (logo) {
           // console.log("Uploading logo:", logo.name);
