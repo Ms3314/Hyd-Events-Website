@@ -22,6 +22,12 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", "true");
   }
+
+  // ✅ Handle OPTIONS preflight request
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204); // Send empty response for preflight requests
+  }
+
   next();
 });
 
