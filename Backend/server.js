@@ -23,9 +23,10 @@ app.use((req, res, next) => {
     res.setHeader("Access-Control-Allow-Credentials", "true");
   }
 
-  // ✅ Handle OPTIONS preflight request
+  // ✅ Handle OPTIONS requests properly
   if (req.method === "OPTIONS") {
-    return res.sendStatus(204); // Send empty response for preflight requests
+    res.status(204).end();  // 🔴 This must include CORS headers
+    return;
   }
 
   next();
