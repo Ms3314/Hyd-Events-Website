@@ -8,6 +8,7 @@ import userRouter from "./routes/user.js";
 const app = express();
 const port = process.env.PORT || 3000 ; 
 
+// Improved CORS configuration
 const allowedOrigins = [
   "https://hyd-events-website-admin.onrender.com",
   "https://hydevents-main.onrender.com",
@@ -16,22 +17,22 @@ const allowedOrigins = [
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-
-  // ✅ Always set CORS headers (even if origin is undefined)
-  if (!origin || allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin || "*"); // Allow requests without an origin
+  
+  // Check if the origin is in our allowed list
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", "true");
   }
-
-  // ✅ Fix OPTIONS preflight response (must include headers)
+  
+  // Handle preflight requests
   if (req.method === "OPTIONS") {
     res.writeHead(204);
     res.end();
     return;
   }
-
+  
   next();
 });
 
