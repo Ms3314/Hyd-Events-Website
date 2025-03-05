@@ -6,7 +6,7 @@ import ClubDisplay from './ClubDisplay'
 
 const HomePage = () => {
   return (
-    <div className='h-[900px] '>
+    <div className='h '>
     {/* <CustomCarousel/> */}
     <ClubDisplay/>
     <Header/>

@@ -95,7 +95,6 @@ export async function AddEvent(
     title, description, event_date, price, registration_link, 
     organisation, event_image, time, venue, event_type
 ) {
-    
     try {
         const res = await prisma.event.create({
             data: {
@@ -118,6 +117,38 @@ export async function AddEvent(
     } catch (error) {
         console.error("Error adding event:", error);  // Log the actual error
         throw new Error("Failed to add event");  // ✅ Throw an error instead of returning one
+    }
+}
+
+export async function UpdateEvent( eventid ,
+    title, Description, event_date, price, registration_link, 
+    organisation, event_image, time, venue, event_type , 
+) {
+    try {
+        const res = await prisma.event.update({
+            where : {
+                id : Number(eventid) ,
+            } ,
+            data: {
+                title,
+                Description , 
+                event_date: new Date(event_date), // Ensure correct date format
+                price : Number(price),
+                registration_link,
+                event_image,
+                time: time,  // Ensure it's a DateTime format
+                venue,
+                event_type,
+                organisation: {
+                    connect: [{ id: organisation }]     
+                }
+            }
+        });
+
+        return res;
+    } catch (error) {
+        console.error("Error adding event:", error);  // Log the actual error
+        throw new Error("Failed to add event" , error.message);  // ✅ Throw an error instead of returning one
     }
 }
 

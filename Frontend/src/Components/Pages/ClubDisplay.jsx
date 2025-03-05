@@ -12,8 +12,8 @@ function ClubDisplay() {
         getAllOrgs();
     },[])
   return (
-    <div className='flex flex-col pt-2 mt-2 pl-6 gap-2'>
-        <p className='flex text-black text-2xl font-bold uppercase '>Trending Clubs </p>
+    <div className='flex flex-col p-6 gap-2'>
+        <p className='flex text-black text-2xl pb-4 font-bold uppercase '>Trending Clubs </p>
         <div className="flex flex-row gap-5">
         {orgs?.slice(0,7).map((item, index) => (
             <div key={item.id || index} className={`${index >= 4 ? "hidden  md:flex" : "flex"}`}>

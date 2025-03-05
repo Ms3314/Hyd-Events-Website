@@ -12,6 +12,7 @@ import AddEvents from './Components/AddEvents/AddEvents';
 import EditEvent from './Components/Pages/EditEvent';
 import Settingpg from './Components/Pages/Settingpg';
 import axios from 'axios';
+import { RotatingLines } from 'react-loader-spinner';
 
 
 
@@ -57,7 +58,23 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>; // Prevents flashing errors while checking token
+    return (
+      <>
+      <div className='h-screen flex flex-col align-middle justify-center'>
+        <RotatingLines
+        visible={true}
+        height="50"
+        width="50"
+        color="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        ariaLabel="rotating-lines-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        /> 
+      </div>
+      </>
+    )
   }
 
   return (
@@ -67,7 +84,7 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Homepg />} />
             <Route path="/events" element={<AddEvents />} />
-            <Route path="/editevent" element={<EditEvent />} />
+            <Route path="/editevent/:eventid" element={<EditEvent />} />
             <Route path="/settings" element={<Settingpg />} />
           </Route>
         ) : (

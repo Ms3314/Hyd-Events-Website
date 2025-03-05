@@ -42,17 +42,9 @@ const Eventsdatapage = () => {
     )
   }
   return (
-    <div className="bg-gray-100 min-h-screen pb-10">
-      {/* Hero Banner */}
-      <div className="relative h-64 sm:h-80 mb-20 w-full bg-gradient-to-r from-blue-600 to-purple-600 rounded-b-lg shadow-lg overflow-hidden">
-        <div className="absolute inset-0 opacity-30 bg-pattern-dots"></div>
-        <div className="container mx-auto px-4 h-full flex items-end pb-6">
-          <h1 className="text-white text-3xl sm:text-4xl font-bold">{data?.name}</h1>
-        </div>
-      </div>
-
+    <div className="bg-gray-100 min-h-screen p-10">
       {/* Main Content */}
-      <div className="container mx-auto px-4 -mt-10">
+      <div className="container mx-auto px-4 ">
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Column - Event datas */}
           <div className="lg:col-span-2">

@@ -3,11 +3,11 @@ import hydEventsLogo from '../../assets/hydEventsLogo.png'
 
 const Footer = () => {
   return (
-        <div className='flex items-center justify-center bg-black  w-full'>
-        <div className='flex p-3'><img src={hydEventsLogo}></img>  </div>
+    <div className="flex items-center justify-center bg-black w-full p-3">
+      <img src={hydEventsLogo} alt="Logo" />
+    </div>
+  );
+};
 
-        </div>
-  )
-}
 
 export default Footer

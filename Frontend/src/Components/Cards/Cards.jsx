@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
+import { RotatingLines } from 'react-loader-spinner';
+
 
 const getEventStatus = (eventDate) => {
   const today = new Date();
@@ -51,10 +53,22 @@ const Cards = ({ isEventsPage = false }) => {
 
     if (loading) {
       return (
-        <div className='h-screen flex flex-col align-middle justify-center'>
-          <p className='text-slate-400 text-2xl'>Loading.....</p>
+        <>
+        <div className='h-screen w-full flex flex-col items-center justify-center'>
+          <RotatingLines
+          visible={true}
+          height="50"
+          width="50"
+          color="grey"
+          strokeWidth="5"
+          animationDuration="0.75"
+          ariaLabel="rotating-lines-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          /> 
         </div>
-      );
+        </>
+      )
     }
 
     if (!eventData?.length) {

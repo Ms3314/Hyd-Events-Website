@@ -6,6 +6,7 @@ import '../Pages/style.css'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast'
 import { deleteImage } from '../../firebase/deleteImage'
+import {RotatingLines} from 'react-loader-spinner'
 
 const getEventStatus = (eventDate) => {
   const today = new Date();
@@ -62,8 +63,18 @@ useEffect(() => {
 if (loading) {
   return (
     <>
-    <div className='h-screen flex flex-col align-middle justify-center'>
-      <p className='text-slate-400 text-2xl'>Loading.....</p>
+    <div className='h-screen w-full flex flex-col items-center justify-center'>
+      <RotatingLines
+      visible={true}
+      height="50"
+      width="50"
+      color="red"
+      strokeWidth="5"
+      animationDuration="0.75"
+      ariaLabel="rotating-lines-loading"
+      wrapperStyle={{}}
+      wrapperClass=""
+      /> 
     </div>
     </>
   )
@@ -105,7 +116,7 @@ const Cardcomponent = ({item , setEventData , setLoading}) => {
     const status = getEventStatus(item.event_date);
 
     function EditEventPage(item)  {
-        navigate("/editevent");
+        navigate(`/editevent/${item.id}`);
     }   
     
     return (

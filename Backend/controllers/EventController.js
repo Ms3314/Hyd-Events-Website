@@ -1,4 +1,4 @@
-import { AddEvent, DoesUserWithIdExist, FindAndDeleteEventsOfAdmin, FindEventsOfAdmin } from "../models/adminModel.js";
+import { AddEvent, DoesUserWithIdExist, FindAndDeleteEventsOfAdmin, FindEventsOfAdmin, UpdateEvent } from "../models/adminModel.js";
 
 export const EventController = {
     EventAddAdmin : async (req, res) => {
@@ -27,7 +27,33 @@ export const EventController = {
                 error: error.message  // Return readable error
             });
         }
-},
+    },
+    EventUpdateAdmin : async (req, res) => {
+        const {eventid, title, Description, event_date, price, registration_link, event_image, time, venue } = req.body;
+        
+        const organisation = req.userid;  
+        // console.log("This is the organization ID:", organisation);
+        // console.log("The received event data:", req.body);
+        // console.log(organisation , "this is the userid")
+        try {
+            const eventData = await UpdateEvent( eventid ,title, Description, event_date, price, registration_link, organisation, event_image, time, venue);
+            
+            res.status(200).json({
+                status: "success",
+                message: "The event has been added successfully",
+                data: eventData
+            });
+
+        } catch (error) {
+            console.error("Error in EventAddAdmin:", error);
+            
+            res.status(500).json({
+                status: "error",
+                message: "Error adding the event",
+                error: error.message  // Return readable error
+            });
+        }
+    },
     EventsOfAdmin : async (req ,res) => {
         // console.log(req.params , "these are the params" , req.url , "this is the url")
         const org = req.userid
