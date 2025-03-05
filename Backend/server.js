@@ -16,16 +16,19 @@ const allowedOrigins = [
 
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
+
+  // ✅ Always set CORS headers (even if origin is undefined)
+  if (!origin || allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin || "*"); // Allow requests without an origin
     res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     res.setHeader("Access-Control-Allow-Credentials", "true");
   }
 
-  // ✅ Handle OPTIONS requests properly
+  // ✅ Fix OPTIONS preflight response (must include headers)
   if (req.method === "OPTIONS") {
-    res.status(204).end();  // 🔴 This must include CORS headers
+    res.writeHead(204);
+    res.end();
     return;
   }
 
