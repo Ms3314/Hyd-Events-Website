@@ -31,6 +31,7 @@ function App() {
         "http://localhost:3000/api/v1/admin/checkToken",
         {},
         {
+          withCredentials : true ,
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
