@@ -42,6 +42,7 @@ const AddEvents = () => {
     };
 
     const response = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/event`, eventData, {
+      withCredentials : true ,
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",

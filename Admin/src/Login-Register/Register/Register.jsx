@@ -42,7 +42,9 @@ const Register = () => {
         // console.log("what is the problem")
         const payload = await axios.post(
           `${import.meta.env.VITE_SERVER_URL}/api/v1/admin/signup`,
-          registerData
+          registerData , {
+            withCredentials: true,
+          }
         );
         if (payload.status === 200) {
           toast.success("Account created successfully!");

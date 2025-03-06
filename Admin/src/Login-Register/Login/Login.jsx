@@ -13,7 +13,9 @@ const Login = () => {
       if (loginData.email === "" || loginData.password === "") return;
   
       try {
-        const payload = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/signin`, loginData);
+        const payload = await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/v1/admin/signin`, loginData , {
+          withCredentials: true,
+        });
         if (payload.status === 200) {
           localStorage.setItem("token", payload.data.token);
           localStorage.removeItem("events")
